@@ -34,6 +34,9 @@ anniv = raw.find("More anniversaries:")
 raw = raw[onthisday:anniv]
 print(raw)
 
+# removes all new lines:
+sentence = " ".join(re.split("\s+", raw, flags=re.UNICODE))
+print(sentence)
 
 
 # tokenization (if needed)
