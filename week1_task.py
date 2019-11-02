@@ -8,6 +8,13 @@ import nltk, re, pprint
 from nltk import word_tokenize
 from urllib import request
 from bs4 import BeautifulSoup
+from datetime import date
+
+today = date.today()
+day = today.strftime("%B %d, %Y")
+print("Today is ", day)
+
+print("Historical events that happened on this day according to Wikipedia:\n")
 
 # From nltk book ch 3:
 
@@ -19,20 +26,23 @@ html = request.urlopen(url).read().decode('utf8')
 # Use beautiful soup to find the text in the file
 raw = BeautifulSoup(html, 'html.parser').get_text()
 
+# starting point of the text segment
 onthisday = raw.find("On this day")
-print(onthisday)
-
+# ending point of the text segment
 anniv = raw.find("More anniversaries:")
-print(anniv)
 
-print(raw[onthisday:anniv])
+raw = raw[onthisday:anniv]
+print(raw)
+
+
 
 # tokenization (if needed)
-tokens = word_tokenize(raw)
-print(tokens)
+
+# tokens = word_tokenize(raw)
+# print(tokens)
 
 # create an NLTK text from this list of tokens (if needed)
-text = nltk.Text(tokens)
-print(type(text))
-length = len(text)
-print(text[length-100:length-1])
+
+# text = nltk.Text(tokens)
+# print(type(text))
+# print(text)
