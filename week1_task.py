@@ -18,8 +18,7 @@ html = request.urlopen(url).read().decode('utf8')
 
 # Use beautiful soup to find the text in the file
 raw = BeautifulSoup(html, 'html.parser').get_text()
-tokens = word_tokenize(raw)
-print(tokens)
+
 onthisday = raw.find("On this day")
 print(onthisday)
 
@@ -28,8 +27,11 @@ print(anniv)
 
 print(raw[onthisday:anniv])
 
+# tokenization (if needed)
+tokens = word_tokenize(raw)
+print(tokens)
 
-# create an NLTK text from this list of tokens
+# create an NLTK text from this list of tokens (if needed)
 text = nltk.Text(tokens)
 print(type(text))
 length = len(text)
