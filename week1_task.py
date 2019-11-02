@@ -5,21 +5,23 @@
 # 3. Extract only certain parts of the text
 
 # From nltk book ch 3:
+import nltk, re, pprint
+from nltk import word_tokenize
 from urllib import request
-
-url = "http://news.bbc.co.uk/2/hi/health/2284783.stm"
-html = request.urlopen(url).read().decode('utf8')
-html[:60]
-'<!doctype html public "-//W3C//DTD HTML 4.0 Transitional//EN'
-print(html)
-
-
-# To parse a document, pass it into the BeautifulSoup constructor. You can pass in a string or an open filehandle:
-
 from bs4 import BeautifulSoup
 
-#with open("index.html") as fp:
-#    soup = BeautifulSoup(fp)
 
-#soup = BeautifulSoup("<html>data</html>")
+# download the document
+url = "http://news.bbc.co.uk/2/hi/health/2284783.stm"
+html = request.urlopen(url).read().decode('utf8')
+print(html)
+
+# Use beautiful soup to find the text in the file
+raw = BeautifulSoup(html, 'html.parser').get_text()
+tokens = word_tokenize(raw)
+tokens
+
+# create an NLTK text from this list of tokens
+
+
 
