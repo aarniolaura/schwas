@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 # From nltk book ch 3:
 
 # download the document
-url = "http://news.bbc.co.uk/2/hi/health/2284783.stm"
+url = "http://www.reddit.com/r/Showerthoughts/"
 html = request.urlopen(url).read().decode('utf8')
 #print(html)
 
@@ -25,5 +25,3 @@ print(tokens)
 text = nltk.Text(tokens)
 print(type(text))
 print(text)
-
-
