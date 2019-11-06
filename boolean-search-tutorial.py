@@ -12,16 +12,6 @@
 import nltk, re, pprint
 from urllib.request import urlopen
 
-wikipedia = ""
-file_name = "enwiki-20181001-corpus.100-articles.txt"
-try:
-    file = open(file_name, "r", encoding='utf-8')
-    wikipedia = file.read()
-    file.close()
-except OSError:
-    print("Error reading the file", file_name)
-
-print(wikipedia[:10])
 # ## Term-document matrix
 # 
 # We need to import some functionality from sklearn (also called scikit-learn), which is a free software machine learning library for Python.
