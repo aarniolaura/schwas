@@ -15,6 +15,12 @@ documents = ["This is a silly example",
              "Nothing to see here",
              "This is a great and long example"]
 
+from urllib import urlopen
+url = "http://www.gutenberg.org/cache/epub/19959/pg19959.txt"
+raw = urlopen(url).read()
+type(raw)
+
+
 
 # ## Term-document matrix
 # 
