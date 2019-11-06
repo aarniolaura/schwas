@@ -18,3 +18,18 @@ print(len(docs))
 
 for i in docs:
     print(i)
+
+dict = {}
+for d in docs:
+    #
+    alku = d.find("<article name=")
+    loppu = d.find(">")
+    name = d[alku:loppu]
+    text = d[loppu + 1:]
+    dict[name] = text
+
+for k, v in dict.items():
+    print("otsikko")
+    print(k)
+    print("teksti")
+    print(v)
