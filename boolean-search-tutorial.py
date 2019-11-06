@@ -10,18 +10,28 @@
 # In[1]:
 from __future__ import division
 import nltk, re, pprint
+from urllib.request import urlopen
 
-documents = ["This is a silly example",
-             "A better example",
-             "Nothing to see here",
-             "This is a great and long example"]
 
-from urllib import urlopen
 url = "http://www.gutenberg.org/cache/epub/19959/pg19959.txt"
 mabinogion = urlopen(url).read()
-type(mabinogion)
 
+url = "http://www.gutenberg.org/files/84/84-0.txt"
+frankenstein = urlopen(url).read()
 
+url = "http://www.gutenberg.org/files/11/11-0.txt"
+alice = urlopen(url).read()
+
+url = http://www.gutenberg.org/cache/epub/345/pg345.txt
+dracula = urlopen(url).read()
+
+url = https://www.gutenberg.org/files/1661/1661-0.txt
+sherlock = urlopen(url).read()
+ 
+url = https://www.gutenberg.org/files/4300/4300-0.txt
+ulysses = urlopen(url).read()
+
+documents = [mabinogion, frankenstein, alice, dracula, sherlock, ulysses]
 
 # ## Term-document matrix
 # 
