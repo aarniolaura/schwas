@@ -71,11 +71,11 @@ test_query("example AND NOT nothing")
 
 
 # Ask the user to type a query
-query= " "
+query = str(input("Enter a query (enter blank if you want to quit): "))
 while query != "":
-    query = str(input("Enter a query (enter blank if you want to quit): "))
     # hits_matrix = eval(rewrite_query(query))
     test_query(query)
+    query = str(input("Enter a new query (enter blank if you want to quit): "))
 else:
     print("Goodbye!")
 
