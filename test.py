@@ -21,7 +21,6 @@ for i in docs:
 
 dict = {}
 for d in docs:
-    #
     alku = d.find("<article name=")
     loppu = d.find(">")
     name = d[alku:loppu]
