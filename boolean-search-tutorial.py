@@ -8,7 +8,8 @@
 # Let's first create some toy data, that is, four sentences that we consider to be our "documents":
 
 # In[1]:
-
+from __future__ import division
+import nltk, re, pprint
 
 documents = ["This is a silly example",
              "A better example",
@@ -17,8 +18,8 @@ documents = ["This is a silly example",
 
 from urllib import urlopen
 url = "http://www.gutenberg.org/cache/epub/19959/pg19959.txt"
-raw = urlopen(url).read()
-type(raw)
+mabinogion = urlopen(url).read()
+type(mabinogion)
 
 
 
