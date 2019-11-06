@@ -33,6 +33,10 @@ ulysses = urlopen(url).read()
 
 documents = [mabinogion, frankenstein, alice, dracula, sherlock, ulysses]
 
+doc_dict = {"mabinogion" : mabinogion, "frankenstein" : frankenstein,
+            "alice" : alice, "dracula" : dracula,
+            "sherlock" : sherlock, "ulysses" : ulysses}
+
 # ## Term-document matrix
 # 
 # We need to import some functionality from sklearn (also called scikit-learn), which is a free software machine learning library for Python.
