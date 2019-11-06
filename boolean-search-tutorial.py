@@ -8,7 +8,7 @@
 # Let's first create some toy data, that is, four sentences that we consider to be our "documents":
 
 # In[1]:
-from __future__ import division
+
 import nltk, re, pprint
 from urllib.request import urlopen
 
@@ -22,13 +22,13 @@ frankenstein = urlopen(url).read()
 url = "http://www.gutenberg.org/files/11/11-0.txt"
 alice = urlopen(url).read()
 
-url = http://www.gutenberg.org/cache/epub/345/pg345.txt
+url = "http://www.gutenberg.org/cache/epub/345/pg345.txt"
 dracula = urlopen(url).read()
 
-url = https://www.gutenberg.org/files/1661/1661-0.txt
+url = "https://www.gutenberg.org/files/1661/1661-0.txt"
 sherlock = urlopen(url).read()
  
-url = https://www.gutenberg.org/files/4300/4300-0.txt
+url = "https://www.gutenberg.org/files/4300/4300-0.txt"
 ulysses = urlopen(url).read()
 
 documents = [mabinogion, frankenstein, alice, dracula, sherlock, ulysses]
