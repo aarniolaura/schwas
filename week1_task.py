@@ -16,8 +16,6 @@ print("Today is ", day)
 
 print("Historical events that happened on this day according to Wikipedia:\n")
 
-# From nltk book ch 3:
-
 # download the document
 url = "https://en.wikipedia.org/wiki/Main_Page"
 html = request.urlopen(url).read().decode('utf8')
@@ -31,12 +29,12 @@ onthisday = raw.find("On this day")
 # ending point of the text segment
 anniv = raw.find("More anniversaries:")
 
+# Extract the wanted segment:
 raw = raw[onthisday:anniv]
-print(raw)
 
-# removes all new lines:
-sentence = " ".join(re.split("\s+", raw, flags=re.UNICODE))
-print(sentence)
+# Remove excess new lines
+segment = re.sub('\n\n\n', '\n', raw)
+print(segment)
 
 
 # tokenization (if needed)
