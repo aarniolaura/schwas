@@ -84,11 +84,12 @@ def show_doc(query):
 query = str(input("Enter a query: "))
 while query != "":
     # hits_matrix = eval(rewrite_query(query))
-    test_query(query)
-    show_doc(query)
-
-
-    query = str(input("Enter a new query (enter blank if you want to quit): "))
+    try:
+        #test_query(query)
+        show_doc(query)
+        query = str(input("Enter a new query (enter blank if you want to quit): "))
+    except KeyError:
+        query = str(input("Your search failed. Try again: "))
 else:
     print("Goodbye!")
 
