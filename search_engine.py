@@ -73,7 +73,7 @@ def show_doc(query):
 #   print(hits_list)
     count = 0
     for doc_idx in hits_list:
-        print("Matching doc:", documents[doc_idx][:200] + "...")
+        print("<Matching article:", documents[doc_idx][15:][:200] + " blaa...")
         print()
         count += 1
         if count > 4:
