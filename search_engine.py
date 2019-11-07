@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 # Data:
 wikipedia = ""
-file_name = "enwiki-20181001-corpus.100-articles.txt"
+file_name = "enwiki-20181001-corpus.1000-articles.txt"
 try:
     file = open(file_name, "r", encoding='utf-8')
     wikipedia = file.read()
@@ -73,7 +73,7 @@ def show_doc(query):
 #   print(hits_list)
     count = 0
     for doc_idx in hits_list:
-        print("<Matching article:", documents[doc_idx][15:][:200] + " blaa...")
+        print("<Matching article:", documents[doc_idx][15:][:200] + "...")
         print()
         count += 1
         if count > 4:
