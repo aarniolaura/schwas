@@ -44,7 +44,7 @@ dense_matrix = sparse_matrix.todense()
 td_matrix = dense_matrix.T   # .T transposes the matrix
 terms = cv.get_feature_names()  # list of all terms
 
-# term-to-index vocabulary
+# term-to-index vocabulary {"term" : <index>}
 t2i = cv.vocabulary_
 
 
@@ -59,7 +59,17 @@ operators = {"and": "&", "AND": "&",
 # rewrites the operators (and, or, not), or
 # if the token is not an operator, returns the row for the term in term-document matrix:
 def rewrite_token(t):
-    return operators.get(t, 'td_matrix[t2i["{:s}"]]'.format(t))
+    if t in operators.keys():
+        newtoken = operators.get(t)
+    elif t in terms:
+        newtoken = 'td_matrix[t2i["{:s}"]]'.format(t)
+    else:
+        newtoken = "NOTFOUND"
+
+    #return operators.get(t, 'td_matrix[t2i["{:s}"]]'.format(t))
+    print(newtoken)
+    return newtoken
+
 
 # splits query into tokens, rewrites all tokens and joins them together:
 def rewrite_query(query):
@@ -73,9 +83,13 @@ def test_query(query):
 
 def show_doc(query):
     # matching documents as a matrix of one row:
+    q = rewrite_query(query)
+    print(q)
     hits_matrix = eval(rewrite_query(query))
+    print(hits_matrix)
     # the y-coordinates (doc indexes) of the non-zero elements converted to a list:
     hits_list = list(hits_matrix.nonzero()[1])
+    print(hits_list)
 #   print(hits_list)
     count = 0
     for doc_idx in hits_list:
@@ -83,7 +97,9 @@ def show_doc(query):
         print()
         count += 1
         if count > 4:
-            return print("Showing the first five of",len(hits_list),"articles.")
+            print("Showing the first five of",len(hits_list),"articles.")
+            return
+
 
 # MAKING QUERIES
 print("Welcome to the search engine!")
