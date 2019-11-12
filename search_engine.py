@@ -85,13 +85,18 @@ def unknown_words(tokens):
                 # remove "NOT NOTFOUND" and  | or & sign from either side to run the rest of the query
                 if idx == 1:
                     tokens = tokens[idx + 2:]
-                    print(tokens)
-                    return " ".join(tokens)
+                    if len(tokens) == 1:
+                        return tokens[0]
+                    else:
+                        return " ".join(tokens)
 
                 if idx > 2:
                     tokens = tokens[:idx - 2]
-                    print(tokens)
-                    return " ".join(tokens)
+                    if len(tokens) == 1:
+                        return tokens[0]
+                    else:
+                        return " ".join(tokens)
+
     # NOTFOUND and/or other word
     if len(tokens) > 2:
         if idx < (len(tokens) - 1):
@@ -99,14 +104,21 @@ def unknown_words(tokens):
                 return -1 # no matches
             if tokens[idx + 1] == "|":  # NOTFOUND or ...
                 tokens = tokens[idx + 2:]  # remove "NOTFOUND |" and make the other part of the query
-                return " ".join(tokens)
+                if len(tokens) == 1:
+                    return tokens[0]
+                else:
+                    return " ".join(tokens)
+
 
         if idx > 1:
             if tokens[idx - 1] == "&":  # ... & NOTFOUND
                 return -1 # no matches
             if tokens[idx - 1] == "|":  # ... | NOTFOUND
                 tokens = tokens[:idx - 1]
-                return " ".join(tokens)
+                if len(tokens) == 1:
+                    return tokens[0]
+                else:
+                    return " ".join(tokens)
 
 
 # splits query into tokens, rewrites all tokens and joins them together:
@@ -123,16 +135,13 @@ def rewrite_query(query):
         if tokens == -2:
             return -2
 
-        if tokens == -3:
-            return -3
-
         else:
             print("One of the words was not found.")
             return " ".join(tokens)
 
     else: # all terms exist, query is fine
-        newquery = " ".join(rewrite_token(t) for t in query.split())
-        return newquery
+        return " ".join(tokens)
+
 
     #return " ".join(rewrite_token(t) for t in query.split())
 
@@ -162,8 +171,6 @@ def show_doc(query):
 
     if q == -3:
         print("Unknown word.")
-
-
 
     else:
         hits_matrix = eval(rewrite_query(query))  # runs the query
