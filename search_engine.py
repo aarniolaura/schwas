@@ -1,4 +1,5 @@
 # WEEK 2 Task: Search engine
+# 2nd version, issue #9 almost fixed
 
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer
@@ -20,11 +21,14 @@ documents = wikipedia.split('</article>')
 dict = {}
 for d in documents:
     alku = d.find("<article name=")
-    loppu = d.find(">")
-    name = d[alku:loppu]
-    text = d[loppu + 1:]
+    loppu = d.find('">')
+    name = d[16:loppu]
+    text = d[loppu + 2:]
     dict[name] = text
 
+def read_article(title):
+    print(title)
+    print(dict.get(title))
 
 # CREATING THE MATRIX
 # use scikit's count vectorizer to convert documents to a matrix of tokens
@@ -109,7 +113,6 @@ def unknown_words(tokens):
                 else:
                     return " ".join(tokens)
 
-
         if idx > 1:
             if tokens[idx - 1] == "&":  # ... & NOTFOUND
                 return -1 # no matches
@@ -119,7 +122,6 @@ def unknown_words(tokens):
                     return tokens[0]
                 else:
                     return " ".join(tokens)
-
 
 # splits query into tokens, rewrites all tokens and joins them together:
 def rewrite_query(query):
@@ -137,13 +139,10 @@ def rewrite_query(query):
 
         else:
             print("One of the words was not found.")
-            return " ".join(tokens)
+            return tokens
 
     else: # all terms exist, query is fine
         return " ".join(tokens)
-
-
-    #return " ".join(rewrite_token(t) for t in query.split())
 
 def test_query(query):
     print("Query: '" + query + "'")
@@ -158,7 +157,7 @@ def show_doc(query):
     if q == -1:
         print("Unknown word. No matches.")
 
-    if q == -2:
+    elif q == -2:
         print("Unknown word. Search query matches every article.")
         count = 0
         for d in documents:
@@ -168,9 +167,6 @@ def show_doc(query):
             if count > 4:
                 print("Showing the first five of", len(documents), "articles.")
                 return
-
-    if q == -3:
-        print("Unknown word.")
 
     else:
         hits_matrix = eval(rewrite_query(query))  # runs the query
@@ -186,6 +182,7 @@ def show_doc(query):
             count += 1
             if count > 4:
                 print("Showing the first five of", len(hits_list), "articles.")
+                print()
                 return
 
 
