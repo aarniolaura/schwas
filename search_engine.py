@@ -3,7 +3,7 @@
 import nltk
 from sklearn.feature_extraction.text import CountVectorizer
 
-# Data:
+# DATA
 wikipedia = ""
 file_name = "enwiki-20181001-corpus.1000-articles.txt"
 try:
@@ -16,11 +16,6 @@ except OSError:
 # Split into lists of strings (each article is a string)
 documents = wikipedia.split('</article>')
 
-#print(len(documents))
-
-#for i in documents:
-#    print(i)
-
 # Create a dictionary (article name: article contents) if needed
 dict = {}
 for d in documents:
@@ -30,35 +25,44 @@ for d in documents:
     text = d[loppu + 1:]
     dict[name] = text
 
+
+# CREATING THE MATRIX
+# use scikit's count vectorizer to convert documents to a matrix of tokens
+# binary=true --> all non zero counts are set to 1
+# -->(doesn't measure token counts but whether the term is in the document or not)
 cv = CountVectorizer(lowercase=True, binary=True)
 
 # print a sparse matrix
+# cv learns the vocabulary dictionary and returns a document-term matrix
 sparse_matrix = cv.fit_transform(documents)
 
-#print("Document-term matrix: (?)\n")
-#print(sparse_matrix)
-
-# Anyway, let's print a _dense_ version of this matrix:
+# dense version of the same matrix:
 dense_matrix = sparse_matrix.todense()
 
-#print("Document-term matrix: (?)\n")
-#print(dense_matrix)
-
+# transpose into term-document matrix:
+# rows=terms, columns=documents (ordered by terms for faster lookup)
 td_matrix = dense_matrix.T   # .T transposes the matrix
-terms = cv.get_feature_names()
-t2i = cv.vocabulary_  # shorter notation: t2i = term-to-index
+terms = cv.get_feature_names()  # list of all terms
 
-# ## Simple query parser
+# term-to-index vocabulary
+t2i = cv.vocabulary_
 
-d = {"and": "&", "AND": "&",
+
+# SIMPLE QUERY PARSER
+
+# operator replacements
+operators = {"and": "&", "AND": "&",
      "or": "|", "OR": "|",
      "not": "1 -", "NOT": "1 -",
-     "(": "(", ")": ")"}          # operator replacements
+     "(": "(", ")": ")"}
 
+# rewrites the operators (and, or, not), or
+# if the token is not an operator, returns the row for the term in term-document matrix:
 def rewrite_token(t):
-    return d.get(t, 'td_matrix[t2i["{:s}"]]'.format(t)) # Can you figure out what happens here?
+    return operators.get(t, 'td_matrix[t2i["{:s}"]]'.format(t))
 
-def rewrite_query(query): # rewrite every token in the query
+# splits query into tokens, rewrites all tokens and joins them together:
+def rewrite_query(query):
     return " ".join(rewrite_token(t) for t in query.split())
 
 def test_query(query):
@@ -68,18 +72,22 @@ def test_query(query):
     print()
 
 def show_doc(query):
+    # matching documents as a matrix of one row:
     hits_matrix = eval(rewrite_query(query))
+    # the y-coordinates (doc indexes) of the non-zero elements converted to a list:
     hits_list = list(hits_matrix.nonzero()[1])
 #   print(hits_list)
     count = 0
     for doc_idx in hits_list:
-        print("<Matching article:", documents[doc_idx][15:][:200] + "...")
+        print("<Matching article:", documents[doc_idx][15:200] + "...")
         print()
         count += 1
         if count > 4:
             return print("Showing the first five of",len(hits_list),"articles.")
 
-
+# MAKING QUERIES
+print("Welcome to the search engine!")
+print("Data: 1000 Wikipedia articles")
 # Ask the user to type a query
 query = str(input("Enter a query: "))
 while query != "":
