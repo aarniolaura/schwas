@@ -72,15 +72,42 @@ def rewrite_token(t):
 
 # splits query into tokens, rewrites all tokens and joins them together:
 def rewrite_query(query):
+    # query in a list form:
     tokens = [rewrite_token(t) for t in query.split()]
     print(tokens)
 
     if "NOTFOUND" in tokens:
-        print("x")
         idx = tokens.index("NOTFOUND")
+
+        if len(tokens) == 1: # only 1 word in query (NOTFOUND)
+            print("Word was not found.")
+
+        # when query includes "NOT NOTFOUND"
+        if idx > 0: # NOTFOUND is not first token
+            if tokens[idx - 1] == "1 -":
+                print("NOT this word")
+                if len(tokens) == 2: # only NOT NOTFOUND
+                    print("this should return every article")
+
+                if len(tokens) > 2: # there are other words
+                    print("remove not notfound and make the other part of the query")
+                    # remove | or & sign from either side
+
+        if len(tokens) > 2:
+            if idx < (len(tokens) - 1):
+                if tokens[idx + 1] == "&":  # NOTFOUND and ...
+                    print("return 0 results: word not found")
+                if tokens[idx + 1] == "|":  # NOTFOUND or ...
+                    print("remove notfound or and make the other part of the query")
+
+            if idx > 1:
+                if tokens[idx - 1] == "&":  # ... & NOTFOUND
+                    print("return 0 results: word not found")
+                if tokens[idx - 1] == "|":  # ... | NOTFOUND
+                    print("remove or notfound and make the other part of the query")
+
         return -1
 
-        # fix query here
 
     else: # all terms exist, query is fine
         newquery = " ".join(rewrite_token(t) for t in query.split())
@@ -99,7 +126,7 @@ def show_doc(query):
     q = rewrite_query(query)
 
     if q == -1:
-        print("Word(s) not found.")
+        print("Problem with one of the words. Try again.")
 
     else:
         hits_matrix = eval(rewrite_query(query))  # runs the query
