@@ -67,13 +67,26 @@ def rewrite_token(t):
         newtoken = "NOTFOUND"
 
     #return operators.get(t, 'td_matrix[t2i["{:s}"]]'.format(t))
-    print(newtoken)
     return newtoken
 
 
 # splits query into tokens, rewrites all tokens and joins them together:
 def rewrite_query(query):
-    return " ".join(rewrite_token(t) for t in query.split())
+    tokens = [rewrite_token(t) for t in query.split()]
+    print(tokens)
+
+    if "NOTFOUND" in tokens:
+        print("x")
+        idx = tokens.index("NOTFOUND")
+        return -1
+
+        # fix query here
+
+    else: # all terms exist, query is fine
+        newquery = " ".join(rewrite_token(t) for t in query.split())
+        return newquery
+
+    #return " ".join(rewrite_token(t) for t in query.split())
 
 def test_query(query):
     print("Query: '" + query + "'")
@@ -84,21 +97,25 @@ def test_query(query):
 def show_doc(query):
     # matching documents as a matrix of one row:
     q = rewrite_query(query)
-    print(q)
-    hits_matrix = eval(rewrite_query(query))
-    print(hits_matrix)
-    # the y-coordinates (doc indexes) of the non-zero elements converted to a list:
-    hits_list = list(hits_matrix.nonzero()[1])
-    print(hits_list)
-#   print(hits_list)
-    count = 0
-    for doc_idx in hits_list:
-        print("<Matching article:", documents[doc_idx][15:200] + "...")
-        print()
-        count += 1
-        if count > 4:
-            print("Showing the first five of",len(hits_list),"articles.")
-            return
+
+    if q == -1:
+        print("Word(s) not found.")
+
+    else:
+        hits_matrix = eval(rewrite_query(query))  # runs the query
+
+        # the y-coordinates (doc indexes) of the non-zero elements converted to a list:
+        hits_list = list(hits_matrix.nonzero()[1])
+
+        #   print(hits_list)
+        count = 0
+        for doc_idx in hits_list:
+            print("<Matching article:", documents[doc_idx][15:200] + "...")
+            print()
+            count += 1
+            if count > 4:
+                print("Showing the first five of", len(hits_list), "articles.")
+                return
 
 
 # MAKING QUERIES
