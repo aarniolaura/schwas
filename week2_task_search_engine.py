@@ -21,11 +21,14 @@ documents = wikipedia.split('</article>')
 dict = {}
 for d in documents:
     alku = d.find("<article name=")
-    loppu = d.find(">")
-    name = d[alku:loppu]
-    text = d[loppu + 1:]
+    loppu = d.find('">')
+    name = d[16:loppu]
+    text = d[loppu + 2:]
     dict[name] = text
 
+def read_article(title):
+    print(title)
+    print(dict.get(title))
 
 # CREATING THE MATRIX
 # use scikit's count vectorizer to convert documents to a matrix of tokens
