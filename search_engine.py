@@ -69,44 +69,57 @@ def rewrite_token(t):
     #return operators.get(t, 'td_matrix[t2i["{:s}"]]'.format(t))
     return newtoken
 
+#def unknown_words(tokens):
+
 
 # splits query into tokens, rewrites all tokens and joins them together:
 def rewrite_query(query):
     # query in a list form:
     tokens = [rewrite_token(t) for t in query.split()]
-    print(tokens)
 
     if "NOTFOUND" in tokens:
         idx = tokens.index("NOTFOUND")
 
         if len(tokens) == 1: # only 1 word in query (NOTFOUND)
             print("Word was not found.")
+            return -1
 
         # when query includes "NOT NOTFOUND"
         if idx > 0: # NOTFOUND is not first token
             if tokens[idx - 1] == "1 -":
-                print("NOT this word")
                 if len(tokens) == 2: # only NOT NOTFOUND
-                    print("this should return every article")
+                    print("Word was not found. Search query matches every article.")
+                    return -2
 
-                if len(tokens) > 2: # there are other words
-                    print("remove not notfound and make the other part of the query")
-                    # remove | or & sign from either side
+                if len(tokens) > 3: # there are other words (not notfound and/or ...)
+                    # remove "NOT NOTFOUND" and  | or & sign from either side to run the rest of the query
+                    if idx == 1:
+                        tokens = tokens[idx + 2:]
+                        print(tokens)
+                        return " ".join(tokens)
+
+                    if idx > 2:
+                        tokens = tokens[:idx - 2]
+                        print(tokens)
+                        return " ".join(tokens)
 
         if len(tokens) > 2:
             if idx < (len(tokens) - 1):
                 if tokens[idx + 1] == "&":  # NOTFOUND and ...
-                    print("return 0 results: word not found")
+                    print("No matching articles. Word not found.")
+                    return -3
                 if tokens[idx + 1] == "|":  # NOTFOUND or ...
-                    print("remove notfound or and make the other part of the query")
+                    tokens = tokens[idx + 2:] # remove "NOTFOUND |" and make the other part of the query
+                    return " ".join(tokens)
 
             if idx > 1:
                 if tokens[idx - 1] == "&":  # ... & NOTFOUND
-                    print("return 0 results: word not found")
+                    print("No matching articles. Word not found.")
+                    return -3
                 if tokens[idx - 1] == "|":  # ... | NOTFOUND
                     print("remove or notfound and make the other part of the query")
-
-        return -1
+                    tokens = tokens[:idx - 1]
+                    return " ".join(tokens)
 
 
     else: # all terms exist, query is fine
@@ -127,6 +140,16 @@ def show_doc(query):
 
     if q == -1:
         print("Problem with one of the words. Try again.")
+
+    if q == -2:
+        count = 0
+        for d in documents:
+            print("<Matching article:", d[15:200] + "...")
+            print()
+            count += 1
+            if count > 4:
+                print("Showing the first five of", len(documents), "articles.")
+                return
 
     else:
         hits_matrix = eval(rewrite_query(query))  # runs the query
