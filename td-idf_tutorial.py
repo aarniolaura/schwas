@@ -7,9 +7,6 @@
 #
 # First we take a look at what books there are and how many words each of them contains:
 
-# In[1]:
-
-
 import nltk
 
 booknames = nltk.corpus.gutenberg.fileids()
