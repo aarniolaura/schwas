@@ -27,14 +27,27 @@ for d in documents:
     dict[name] = text
 
 def read_article(title):
-    print(title)
-    print(dict.get(title))
+    if title in dict.keys():
+        print(title)
+        print(dict.get(title))
+    else:
+        print("No such article found.")
 
 # CREATING THE MATRIX
 # use scikit's count vectorizer to convert documents to a matrix of tokens
 # binary=true --> all non zero counts are set to 1
 # -->(doesn't measure token counts but whether the term is in the document or not)
-cv = CountVectorizer(lowercase=True, binary=True)
+
+# standard vectorizer: only words with 2 or more characters
+# term vocabulary size: 107 001
+#cv = CountVectorizer(lowercase=True, binary=True)
+
+# Issue 10: index all words containing alpha-numerical characters (including stop words)
+# this vectorizer includes also 1-character words (like 'a') and doesn't remove any stopwords
+# terms vocabulary size: 107 343
+stopwords = []  # add here any stopwords you want to remove from the list of tokens
+cv = CountVectorizer(lowercase=True, stop_words=stopwords, token_pattern='(?u)\\b\\w+\\b',
+                     max_df=1.0, min_df=1, binary=True)
 
 # print a sparse matrix
 # cv learns the vocabulary dictionary and returns a document-term matrix
@@ -50,7 +63,6 @@ terms = cv.get_feature_names()  # list of all terms
 
 # term-to-index vocabulary {"term" : <index>}
 t2i = cv.vocabulary_
-
 
 # SIMPLE QUERY PARSER
 
@@ -155,10 +167,10 @@ def show_doc(query):
     q = rewrite_query(query)
 
     if q == -1:
-        print("Unknown word. No matches.")
+        print("Word not found. No matches.")
 
     elif q == -2:
-        print("Unknown word. Search query matches every article.")
+        print("Word not found. Search query matches every article.")
         count = 0
         for d in documents:
             print("<Matching article:", d[15:200] + "...")
