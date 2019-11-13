@@ -58,7 +58,7 @@ def search_documents(query_string):
     print("Your query '{:s}' matches the following documents:".format(query_string))
     count = 0
     for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
-        print("Matching article #{:d} (score: {:.4f}): {:s}".format(i, score, documents[doc_idx][15:200]))
+        print("Matching article #{:d} (score: {:.4f}): {:s}".format(i, score, documents[doc_idx][15:200]) + "...")
         print()
         count += 1
         if count > 4:
@@ -78,8 +78,7 @@ while query != "":
     except KeyError:
         query = str(input("Your search failed. Try again: "))
     except IndexError:
-        query = str(input("Your search failed. Try again: "))
-
+        query = str(input("Word(s) not found. Try again: "))
 
 else:
     print("Goodbye!")
