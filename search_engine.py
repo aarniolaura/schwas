@@ -28,8 +28,10 @@ for d in documents:
 
 def read_article(title):
     if title in dict.keys():
-        print(title)
+        print("\n*****************************************")
+        print("\n" + title)
         print(dict.get(title))
+        print("*****************************************\n")
     else:
         print("No such article found.")
 
@@ -188,19 +190,23 @@ def show_doc(query):
 
         #   print(hits_list)
         count = 0
-        for doc_idx in hits_list:
+        for doc_idx in hits_list[:5]:
             print("<Matching article:", documents[doc_idx][15:200] + "...")
             print()
             count += 1
             if count > 4:
-                print("Showing the first five of", len(hits_list), "articles.")
-                print()
-                return
+                print("Showing the first five of", len(hits_list), "articles. \n")
+
+        answer = str(input("Would you like to read one of the articles? (y/n) "))
+        if answer == "y":
+            title = str(input("Type the title of the article (with correct capitalization): "))
+            read_article(title)
 
 
 # MAKING QUERIES
 print("Welcome to the search engine!")
 print("Data: 1000 Wikipedia articles")
+print("You can use boolean operators (and, or, not) in your query.")
 # Ask the user to type a query
 query = str(input("Enter a query: "))
 while query != "":
