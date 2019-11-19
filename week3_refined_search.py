@@ -8,7 +8,7 @@ from textblob import TextBlob
 
 # DATA
 wikipedia = ""
-file_name = "enwiki-20181001-corpus.1000-articles.txt"
+file_name = "enwiki-20181001-corpus.100-articles.txt"
 try:
     file = open(file_name, "r", encoding='utf-8')
     wikipedia = file.read()
@@ -89,7 +89,7 @@ def search_documents(query_string):
                                        reverse=True)
 
     # Output result
-    print("Your query '{:s}' matches the following documents:".format(query_string))
+    print("Your query '{:s}' matches the following documents:\n".format(query_string))
     count = 0
     for i, (score, doc_idx) in enumerate(ranked_scores_and_doc_ids):
         print("Matching article #{:d} (score: {:.4f}): {:s}".format(i, score, documents[doc_idx][15:200]) + "...")
@@ -98,10 +98,16 @@ def search_documents(query_string):
         if count > 4:
             return print("Showing the first five of", len(ranked_scores_and_doc_ids), "articles.\n")
 
+    answer = str(input("Would you like to read one of the articles? (y/n) "))
+    if answer == "y":
+        title = str(input("Type the title of the article (with correct capitalization): "))
+        read_article(title)
+
 # MAKING QUERIES
 print("Welcome to the search engine!")
 print("Data: 1000 Wikipedia articles")
 print("Number of terms in vocabulary:", len(gv.get_feature_names()))
+print("Number of bi-words in vocabulary:", len(biword_v.get_feature_names()))
 print()
 # Ask the user to type a query
 query = str(input("Enter a query: "))
