@@ -1,16 +1,23 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
+from textblob import TextBlob
 
 documents = ["new york is a city",
              "york is not new",
              "new example sentence"]
 
+def textblob_tokenizer(str_input):
+    blob = TextBlob(str_input.lower())
+    tokens = blob.words
+    words = [token.stem() for token in tokens]
+    return words
+
 # creates biword term vectors
-biword_v = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(2, 2))
+biword_v = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(2, 2), tokenizer=textblob_tokenizer)
 biword_matrix = biword_v.fit_transform(documents).T.tocsr()
 
 # creates normal term vectors
-gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2")
+gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
 
