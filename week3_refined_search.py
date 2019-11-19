@@ -39,16 +39,29 @@ def read_article(title):
 
 # CREATING THE MATRIX
 
+# creates biword term vectors
+biword_v = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(2, 2))
+biword_matrix = biword_v.fit_transform(documents).T.tocsr()
+
+# creates normal term vectors
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2")
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
 
 def search_documents(query_string):
+    query_tokens = query_string.split()
+    if len(query_tokens) == 2:
+        vectorizer = biword_v
+        matrix = biword_matrix
+    else:
+        vectorizer = gv
+        matrix = g_matrix
+
     # Vectorize query string
-    query_vec = gv.transform([query_string]).tocsc()
+    query_vec = vectorizer.transform([query_string]).tocsc()
 
     # Cosine similarity
-    hits = np.dot(query_vec, g_matrix)
+    hits = np.dot(query_vec, matrix)
 
     # Rank hits
     ranked_scores_and_doc_ids = sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
