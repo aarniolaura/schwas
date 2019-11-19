@@ -12,6 +12,7 @@ def textblob_tokenizer(str_input):
     words = [token.stem() for token in tokens]
     return words
 
+
 # creates biword term vectors
 biword_v = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(2, 2), tokenizer=textblob_tokenizer)
 biword_matrix = biword_v.fit_transform(documents).T.tocsr()
@@ -20,8 +21,24 @@ biword_matrix = biword_v.fit_transform(documents).T.tocsr()
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
+def translate(query_string, source_lang):
+    query_string = TextBlob(query)
+    source_lang = query_string.detect_language()
+    print(source_lang)
+    query_blob = query_string.translate(from_lang=source_lang, to='en')
+    print(query_blob)
+    return str(query_blob)
 
 def search_documents(query_string):
+
+    query_blob = TextBlob(query_string)
+    source_lang = query_blob.detect_language()
+    if source_lang != 'en':
+       query_string =  translate(query_blob, source_lang)
+    else:
+        pass
+
+
     query_tokens = query_string.split()
     if len(query_tokens) == 2:
         vectorizer = biword_v

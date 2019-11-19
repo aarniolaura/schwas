@@ -67,7 +67,6 @@ def search_documents(query_string):
     source_lang = query_blob.detect_language()
     if source_lang != 'en':
        query_string =  translate(query_blob, source_lang)
-       print("Your search was made in the", source_lang, "language. Showing results in English")
     else:
         pass
 
