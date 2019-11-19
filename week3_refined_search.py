@@ -53,8 +53,24 @@ biword_matrix = biword_v.fit_transform(documents).T.tocsr()
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
+def translate(query_string, source_lang):
+    query_string = TextBlob(query)
+    source_lang = query_string.detect_language()
+    print(source_lang)
+    query_blob = query_string.translate(from_lang=source_lang, to='en')
+    print(query_blob)
+    return str(query_blob)
 
 def search_documents(query_string):
+
+    query_blob = TextBlob(query_string)
+    source_lang = query_blob.detect_language()
+    if source_lang != 'en':
+       query_string =  translate(query_blob, source_lang)
+       print("Your search was made in the", source_lang, "language. Showing results in English")
+    else:
+        pass
+
     query_tokens = query_string.split()
     if len(query_tokens) == 2:
         vectorizer = biword_v
@@ -90,6 +106,8 @@ print("Number of terms in vocabulary:", len(gv.get_feature_names()))
 print()
 # Ask the user to type a query
 query = str(input("Enter a query: "))
+
+
 while query != "":
     try:
         search_documents(query)
