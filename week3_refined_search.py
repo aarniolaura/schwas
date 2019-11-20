@@ -8,7 +8,7 @@ from textblob import TextBlob
 
 # DATA
 wikipedia = ""
-file_name = "enwiki-20181001-corpus.100-articles.txt"
+file_name = "enwiki-20181001-corpus.1000-articles.txt"
 try:
     file = open(file_name, "r", encoding='utf-8')
     wikipedia = file.read()
