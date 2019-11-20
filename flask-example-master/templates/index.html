@@ -4,25 +4,21 @@
         <title>Flask example</title>
     </head>
     <body>
-        <h1>Find pictures</h1>
+        <h1>Find proverbs</h1>
         <!--Reload the page with variable "query" in the URL-->
         <form>
             <input type="text" name="query" autofocus>
             <input type="submit" value="Search">
         </form>
-        <table>
+        <ol>
             <!--Go through each item in the "matches" variable sent from
                 search() function in the Flask app-->
             {% for item in matches %}
-            <tr>
                 <!--Display the name of the item based on the "name" key-->
-                <td>{{ item["name"] }}</td>
-                <!--Display the image of the item based on the "source" key-->
-                <td><img src="/static/{{ item["source"] }}" style="width: 400px; height 100%"></td>
-            </tr>
+                <li>{{ item["name"] }}</li>
             <!--End for loop-->
             {% endfor %}
-        </table>
+        </ol>
     </body>
 </html>
                                
