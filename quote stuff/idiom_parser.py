@@ -46,7 +46,7 @@ def textblob_tokenizer(str_input):
     return words
 
 # creates biword term vectors
-biword_v = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(2, 2), tokenizer=textblob_tokenizer)
+biword_v = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(1, 1), tokenizer=textblob_tokenizer)
 biword_matrix = biword_v.fit_transform(documents).T.tocsr()
 
 # creates normal term vectors
@@ -91,7 +91,7 @@ def search_documents(query_string):
         #    print("In your original language: {s}".format(str(idiom_blob)))
         print()
         count += 1
-        if count > 4:
+        if count > 3:
             return print("Showing the best five idiom matches", len(ranked_scores_and_doc_ids), "articles.\n")
 
 # MAKING QUERIES
