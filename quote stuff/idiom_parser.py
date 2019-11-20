@@ -22,6 +22,10 @@ for element in soup.find_all(class_='phrase-list'):
 for elem in idioms:
     elem = elem.split('\n')
 
+import csv
+with open('your_file.txt', 'w') as f:
+    for item in idioms:
+        f.write("%s\n" % item)
 # WEEK 3 TASK PART 2: Refined search
 
 
@@ -30,6 +34,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from textblob import TextBlob
+
 
 
 # Split into lists of strings (each article is a string)
@@ -81,6 +86,7 @@ def search_documents(query_string):
     # Rank hits
     ranked_scores_and_doc_ids = sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
                                        reverse=True)
+    print(ranked_scores_and_doc_ids)
     # Output result
     print("Your query '{:s}' matches the following idioms:\n".format(query_string))
     count = 0

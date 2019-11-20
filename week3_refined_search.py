@@ -97,6 +97,7 @@ def search_documents(query_string):
         title = str(input("Type the title of the article (with correct capitalization): "))
         read_article(title)
 
+
 # MAKING QUERIES
 print("Welcome to the search engine!")
 print("Data: 1000 Wikipedia articles")
@@ -115,6 +116,5 @@ while query != "":
         query = str(input("Your search failed. Try again: "))
     except IndexError:
         query = str(input("Word(s) not found. Try again: "))
-
 else:
     print("Goodbye!")

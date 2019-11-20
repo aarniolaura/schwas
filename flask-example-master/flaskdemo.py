@@ -1,20 +1,11 @@
 from flask import Flask, render_template, request
-import requests
-import nltk
-from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from textblob import TextBlob
 
 
-
-
-documents = [
-    'As mad as a March hare',
-    'As high as a kite',
-    'As keen as mustard',
-    'As mad as a hatter',
-    'As mad as a March hare']
+with open('proverbs.txt', 'r') as f:
+    documents = f.readlines()
 # Split into lists of strings (each article is a string)
 
 # Create a dictionary (article name: article contents) if needed
@@ -69,18 +60,15 @@ def search():
     #Get query from URL variable
     query = request.args.get('query')
     #Initialize list of matches
-
+    matches2 = []
     if query:
         matches = search_documents(query)
-
-        for i, (score, doc_idx) in enumerate(matches):
-            idiom_dict = {}
-            idiom_dict['score'] = score
-            idiom_dict['doc'] = doc_idx
-            matches.append(idiom_dict)
+        for elem in matches:
+            matches2.append(documents[elem[1]])
+    print(matches2)
 
 
 
     #Render index.html with matches variable
-    return render_template('index.html', matches=matches)
+    return render_template('index.html', matches=matches2)
 
