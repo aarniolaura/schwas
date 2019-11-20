@@ -27,32 +27,24 @@ def textblob_tokenizer(str_input):
     words = [token.stem() for token in tokens]
     return words
 
-# creates biword term vectors
-biword_v = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", ngram_range=(1, 1), tokenizer=textblob_tokenizer)
-biword_matrix = biword_v.fit_transform(documents).T.tocsr()
-
 # creates normal term vectors
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
-def translate(query_string, source_lang):
-    query_blob = query_string.translate(from_lang=source_lang, to='en')
-    return str(query_blob)
+#def translate(query_string, source_lang):
+#    query_blob = query_string.translate(from_lang=source_lang, to='en')
+#    return str(query_blob)
 
 def search_documents(query_string):
-    source_lang = TextBlob(query_string).detect_language()
-    if source_lang != 'en':
-       query_string =  translate(TextBlob(query_string), source_lang)
-    else:
-        pass
+#    source_lang = TextBlob(query_string).detect_language()
+#    if source_lang != 'en':
+#       query_string =  translate(TextBlob(query_string), source_lang)
+#    else:
+#        pass
 
     query_tokens = query_string.split()
-    if len(query_tokens) == 2:
-        vectorizer = biword_v
-        matrix = biword_matrix
-    else:
-        vectorizer = gv
-        matrix = g_matrix
+    vectorizer = gv
+    matrix = g_matrix
 
     # Vectorize query string
     query_vec = vectorizer.transform([query_string]).tocsc()
@@ -82,7 +74,12 @@ def search():
         matches = search_documents(query)
 
         for i, (score, doc_idx) in enumerate(matches):
-            print("Idiom #{:d} (score: {:.4f}): {:s}".format(i, score, documents[doc_idx]))
+            idiom_dict = {}
+            idiom_dict['score'] = score
+            idiom_dict['doc'] = doc_idx
+            matches.append(idiom_dict)
+
+
 
     #Render index.html with matches variable
     return render_template('index.html', matches=matches)
