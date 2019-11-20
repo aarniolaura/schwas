@@ -8,7 +8,7 @@ from textblob import TextBlob
 
 # DATA
 wikipedia = ""
-file_name = "enwiki-20181001-corpus.1000-articles.txt"
+file_name = "enwiki-20181001-corpus.100-articles.txt"
 try:
     file = open(file_name, "r", encoding='utf-8')
     wikipedia = file.read()
@@ -54,19 +54,13 @@ gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2",
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
 def translate(query_string, source_lang):
-    query_string = TextBlob(query)
-    source_lang = query_string.detect_language()
-    print(source_lang)
     query_blob = query_string.translate(from_lang=source_lang, to='en')
-    print(query_blob)
     return str(query_blob)
 
 def search_documents(query_string):
-
-    query_blob = TextBlob(query_string)
-    source_lang = query_blob.detect_language()
+    source_lang = TextBlob(query_string).detect_language()
     if source_lang != 'en':
-       query_string =  translate(query_blob, source_lang)
+       query_string =  translate(TextBlob(query_string), source_lang)
     else:
         pass
 
