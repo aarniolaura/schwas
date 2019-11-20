@@ -7,14 +7,21 @@ from bs4 import BeautifulSoup
 from datetime import date
 
 # Data:
-count = 0
-while count != 101
-    url = "https://www.goodreads.com/quotes?page=1"
-    html = request.urlopen(url).read().decode('utf8')
+import requests
+from bs4 import BeautifulSoup
+
+# 1. Download the content
+url = "https://www.phrases.org.uk/meanings/phrases-and-sayings-list.html"
+html = requests.get(url)
 
 
-# Split into lists of strings (each article is a string)
-documents = wikipedia.split('</article>')
+
+# 2. Use beautiful soup to extract the text in the html file
+soup = BeautifulSoup(html.content, 'html.parser')
+idioms = []
+
+for element in soup.find_all(class_='phrase-list'):
+    idioms.append(element.get_text())
 
 #print(len(documents))
 

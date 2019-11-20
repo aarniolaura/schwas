@@ -91,8 +91,8 @@ def search_documents(query_string):
         #    print("In your original language: {s}".format(str(idiom_blob)))
         print()
         count += 1
-        if count > 3:
-            return print("Showing the best five idiom matches", len(ranked_scores_and_doc_ids), "articles.\n")
+        if count > 2:
+            return print("Showing the best three idiom matches", len(ranked_scores_and_doc_ids), "articles.\n")
 
 # MAKING QUERIES
 print("Welcome to the search engine!")
