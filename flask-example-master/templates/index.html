@@ -1,9 +1,45 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Flask example</title>
+        <title>Proverb Search Engine</title>
     </head>
     <body>
+      <style type="text/css">
+  body {
+    padding-left: 11em;
+    font-family: Georgia, "Times New Roman",
+          Times, serif;
+    color: #D3F4F8;
+    background-color: #082F49 }
+  ul.navbar {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 2em;
+    left: 1em;
+    width: 9em }
+  h1 {
+    font-family: Helvetica, Geneva, Arial,
+          SunSans-Regular, sans-serif }
+  ul.navbar li {
+    background: white;
+    margin: 0.5em 0;
+    padding: 0.3em;
+    border-right: 1em solid black }
+  ul.navbar a {
+    text-decoration: none }
+  a:link {
+    color: blue }
+  a:visited {
+    color: purple }
+  </style>
+</head>
+    <!-- Site navigation menu -->
+        <ul class="navbar">
+        <li><a href="http://127.0.0.1:8000/search">Reset</a>
+        <li><a href="https://github.com/aarniolaura/schwas/tree/master/flask-example-master">Github</a>
+</ul>
         <h1>Find proverbs</h1>
         <!--Reload the page with variable "query" in the URL-->
         <form>
@@ -19,6 +55,8 @@
             <!--End for loop-->
             {% endfor %}
         </ol>
+    <address>Made 20 April 2019<br>
+  by Laura and Teemu.</address>
     </body>
 </html>
                                

@@ -22,14 +22,14 @@ def textblob_tokenizer(str_input):
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
 g_matrix = gv.fit_transform(documents).T.tocsr()
 
-def translate(query_string, source_lang):
+def translate_query(query_string, source_lang):
     query_blob = query_string.translate(from_lang=source_lang, to='en')
     return str(query_blob)
 
 def search_documents(query_string):
     source_lang = TextBlob(query_string).detect_language()
     if source_lang != 'en':
-       query_string =  translate(TextBlob(query_string), source_lang)
+       query_string = translate_query(TextBlob(query_string), source_lang)
     else:
         pass
 
@@ -65,7 +65,6 @@ def search():
         matches = search_documents(query)
         for elem in matches:
             matches2.append(documents[elem[1]])
-    print(matches2)
 
 
 
