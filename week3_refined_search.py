@@ -100,7 +100,7 @@ def search_documents(query_string):
 
 # MAKING QUERIES
 print("Welcome to the search engine!")
-print("Data: 1000 Wikipedia articles")
+print("Data: 100 Wikipedia articles")
 print("Number of terms in vocabulary:", len(gv.get_feature_names()))
 print("Number of bi-words in vocabulary:", len(biword_v.get_feature_names()))
 print()
