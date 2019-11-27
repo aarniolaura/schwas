@@ -6,11 +6,15 @@
 
 # p1 = term1, p2 = term2, k = number of words within which the two terms appear
 
+def docId(term):
+    return -1
+
 def positional_intersect(p1, p2, k):
     results = []
     while len(p1) != 0 and len(p2) != 0:
         if docId(p1) == docId(p2): # find out doc id
             # postings lists
+            print()
 
 
 

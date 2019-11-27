@@ -1,0 +1,13 @@
+Plans for final project:
+
+1) Proverb search engine
+
+2) Searching proverbs based on exact words and also meanings of proverbs
+
+3) Different languages? (eng/fin/esp)
+
+4) Add some graphs or images?
+
+5) Propose other words related to the query
+
+6) Create a visually elegant search engine

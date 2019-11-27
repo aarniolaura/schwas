@@ -2,15 +2,10 @@ from flask import Flask, render_template, request
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from textblob import TextBlob
-import spacy
-from spacy import displacy
-from pathlib import Path
-import re
+
 
 with open('proverbs.txt', 'r') as f:
-    documents = f.read().splitlines()
-
-print(documents)
+    documents = f.readlines()
 # Split into lists of strings (each article is a string)
 
 # Create a dictionary (article name: article contents) if needed
@@ -61,7 +56,6 @@ app = Flask(__name__)
 #Function search() is associated with the address base URL + "/search"
 @app.route('/search')
 def search():
-    nlp = spacy.load("en_core_web_sm")
     matches = []
     #Get query from URL variable
     query = request.args.get('query')
@@ -71,12 +65,8 @@ def search():
         matches = search_documents(query)
         for elem in matches:
             matches2.append(documents[elem[1]])
-            doc = nlp(documents[elem[1]])
-            svg = displacy.render(doc, style="dep", jupyter=False)
-            file_name = '-'.join([w.text for w in doc if not w.is_punct]) + ".svg"
-            print(file_name)
-            output_path = Path("static/" + file_name)
-            output_path.open("w", encoding="utf-8").write(svg)
+
+
 
     #Render index.html with matches variable
     return render_template('index.html', matches=matches2[:5])
