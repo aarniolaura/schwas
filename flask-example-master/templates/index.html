@@ -64,7 +64,7 @@
             {% for item in matches %}
                 <!--Display the name of the item based on the "name" key-->
                 <ul><br>{{ item['name'] }}</br></ul>
-                <td><img src="/static/{{ item['pltpath'] }}" style="width: 600px; height 100%"></td>
+                <td><img src="{{ item['pltpath'] }}"></td>
             <!--End for loop-->
             {% endfor %}
         </ol>

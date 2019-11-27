@@ -9,8 +9,6 @@ import re
 
 with open('proverbs.txt', 'r') as f:
     documents = f.read().splitlines()
-
-print(documents)
 # Split into lists of strings (each article is a string)
 
 # Create a dictionary (article name: article contents) if needed
