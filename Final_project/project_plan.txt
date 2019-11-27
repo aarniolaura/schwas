@@ -9,3 +9,5 @@ Plans for final project:
 4) Add some graphs or images?
 
 5) Propose other words related to the query
+
+6) Create a visually elegant search engine
