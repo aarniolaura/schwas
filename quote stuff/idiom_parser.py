@@ -1,4 +1,4 @@
-# TASK 1: TEXT MINING FROM THE WEB
+ # TASK 1: TEXT MINING FROM THE WEB
 
 # 1. Download content from a web page
 # 2. Extract plain text from the HTML document
