@@ -2,6 +2,13 @@ from flask import Flask, render_template, request
 from sklearn.feature_extraction.text import TfidfVectorizer
 import numpy as np
 from textblob import TextBlob
+from flask import Flask, render_template, request
+from bs4 import BeautifulSoup
+import matplotlib.pyplot as plt
+import matplotlib as mlp
+import re
+import nltk
+import os
 
 
 with open('proverbs.txt', 'r') as f:
@@ -61,10 +68,13 @@ def search():
     query = request.args.get('query')
     #Initialize list of matches
     matches2 = []
+    scores = []
     if query:
         matches = search_documents(query)
         for elem in matches:
             matches2.append(documents[elem[1]])
+            scores.append(documents[elem[0]])
+
 
 
 
