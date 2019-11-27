@@ -67,6 +67,7 @@ def search():
     query = request.args.get('query')
     #Initialize list of matches
     matches2 = []
+    testi = []
     if query:
         matches = search_documents(query)
         for elem in matches:
@@ -77,7 +78,8 @@ def search():
             print(file_name)
             output_path = Path("static/" + file_name)
             output_path.open("w", encoding="utf-8").write(svg)
+            testi.append({'name': doc, 'pltpath': output_path})
 
 
     #Render index.html with matches variable
-    return render_template('index.html', matches=matches2[:5])
+    return render_template('index.html', matches=testi[:5])

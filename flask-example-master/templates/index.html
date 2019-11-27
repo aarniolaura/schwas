@@ -63,7 +63,8 @@
                 search() function in the Flask app-->
             {% for item in matches %}
                 <!--Display the name of the item based on the "name" key-->
-            <ul><br>{{ item }}</br></ul>
+                <ul><br>{{ item['name'] }}</br></ul>
+                <td><img src="/static/{{ item['pltpath'] }}" style="width: 600px; height 100%"></td>
             <!--End for loop-->
             {% endfor %}
         </ol>
