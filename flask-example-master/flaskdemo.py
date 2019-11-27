@@ -56,6 +56,24 @@ def search_documents(query_string):
 
     return ranked_scores_and_doc_ids
 
+def generate_query_plot(query,matches):
+    # create a figure
+    fig = plt.figure()
+    plt.title("Word distribution per document \n query: "+query)
+    # some values we will use to generate a plot
+    dist_dict={}
+    for match in matches:
+        dist_dict[match['name']] = len(match['content'])
+    # from a dictionary we can create a plot in two steps:
+    #  1) plotting the bar chart
+    #  2) setting the appropriate ticks in the x axis
+    plt.bar(range(len(dist_dict)), list(dist_dict.values()), align='center')
+    plt.xticks(range(len(dist_dict)), list(dist_dict.keys()),rotation=30) # labels are rotated
+    # make room for the labels
+    plt.gcf().subplots_adjust(bottom=0.30) # if you comment this line, your labels in the x-axis will be cutted
+    plt.savefig('static/query_plot.png')
+
+
 
 #Initialize Flask instance
 app = Flask(__name__)
