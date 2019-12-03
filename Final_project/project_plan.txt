@@ -10,7 +10,7 @@ Proverb search engine with following features:
 
 - you can search for proverbs that contain a certain word or words
   e.g. "milk" -->  " Don't cry over spilt milk "
-- you can also search for proverbs based on the meaning
+- you can also search for proverbs based on the meaning (assuming that the word exists in the description of the proverb)
   e.g. "mistake" --> " Don't cry over spilt milk "
   
 - documents are parsed using tf-idf-vectorizer
@@ -26,3 +26,4 @@ Proverb search engine with following features:
   - https://spacy.io/usage/vectors-similarity
 
 - ✧ visually dashing (and elegant) user interface ✧
+  - maybe first listing the matching idioms and then if you click one you get the explanation (and an image)
