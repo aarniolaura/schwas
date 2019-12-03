@@ -1,13 +1,28 @@
 Plans for final project:
 
-1) Proverb search engine
+Proverb search engine with following features:
 
-2) Searching proverbs based on exact words and also meanings of proverbs
+- data consisting of english proverbs/idioms and their explanations (this data we have already)
 
-3) Different languages? (eng/fin/esp)
+- maybe also data in other languages, e.g. finnish, spanish, french, german... (find data)
+  - so if a user types in a query in spanish, the engine should recognize the language and make the search in the spanish data
+  - unless the user wants to find results in an other language
 
-4) Add some graphs or images?
+- you can search for proverbs that contain a certain word or words
+  e.g. "milk" -->  " Don't cry over spilt milk "
+- you can also search for proverbs based on the meaning
+  e.g. "mistake" --> " Don't cry over spilt milk "
+  
+- documents are parsed using tf-idf-vectorizer
+  - documents are short so no need for bi-word or phrase queries (in any case the words will be close to each other) 
+  - stemming is always on (or is there any need for exact word queries?)
+  
+- images or graphs
+  - dependency trees... 
+  - something else?
 
-5) Propose other words related to the query
+- after a search is made, propose other search words related to the original one (especially if nothing was found?)
+  - maybe using spacy's similarity vectors but this might be a bit complicated
+  - https://spacy.io/usage/vectors-similarity
 
-6) Create a visually elegant search engine
+- ✧ visually dashing (and elegant) user interface ✧
