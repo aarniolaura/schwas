@@ -19,6 +19,7 @@ Proverb search engine with following features:
   
 - images or graphs
   - dependency trees... 
+  - maybe display a bar chart that shows how big the data is in each language?
   - something else?
 
 - after a search is made, propose other search words related to the original one (especially if nothing was found?)
