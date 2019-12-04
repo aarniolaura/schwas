@@ -33,7 +33,7 @@
     color: #082F49 }
     .content {
       max-width: 500px;
-  margin: auto;
+  margin: absolute;
   li {
   list-style-type: none;
   }
@@ -47,27 +47,30 @@
         <li><a href="https://github.com/aarniolaura/schwas/tree/master/flask-example-master">Github</a>
 </ul>
 
-          <h1><center>Find proverbs</center></h1>
-      <p><small><center>Search for a part of a proverb you can't remember fully<br>
-        or for a proverb in another language to find the English equivalent!</center>
-        <br>
-      </p>
+          <h1>Find proverbs</h1>
+      <p><small>Search for a part of a proverb you can't remember fully<br>
+        or for a proverb in another language to find the English equivalent!
+          <br></small></p>
+
        <!--Reload the page with variable "query" in the URL-->
-        <form><center>
+        <form>
             <input type="text" name="query" autofocus>
             <input type="submit" value="Search">
-            </center>
+
         </form>
+          <table>
         <ol>
             <!--Go through each item in the "matches" variable sent from
                 search() function in the Flask app-->
             {% for item in matches %}
                 <!--Display the name of the item based on the "name" key-->
-                <ul><br>{{ item['name'] }}</br></ul>
-                <td><img src="{{ item['pltpath'] }}"></td>
+                <th><br>{{ item['name'] }}</br></th>
+            <tr><td><br><img src="{{ item['pltpath'] }}" class="center"></br></td></tr>
             <!--End for loop-->
             {% endfor %}
         </ol>
+          </table>
+
       <hr>
     <address>By Laura & Teemu<br>
 </address>
