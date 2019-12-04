@@ -9,7 +9,10 @@ import re
 
 
 with open('proverbs.txt', 'r') as f:
-    documents = f.read().splitlines()
+    proverb_document = f.read().splitlines()
+
+with open('meanings.txt', 'r') as f:
+    meaning_document = f.read().splitlines()
 # Split into lists of strings (each article is a string)
 
 # Create a dictionary (article name: article contents) if needed
@@ -24,28 +27,32 @@ def textblob_tokenizer(str_input):
 
 # creates normal term vectors
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
-g_matrix = gv.fit_transform(documents).T.tocsr()
+
+def get_matrix(doc):
+    g_matrix = gv.fit_transform(doc).T.tocsr()
+
+    return g_matrix
 
 def translate_query(query_string, source_lang):
     query_blob = query_string.translate(from_lang=source_lang, to='en')
     return str(query_blob)
 
-def search_documents(query_string):
+def search_documents(query_string, doc):
     source_lang = TextBlob(query_string).detect_language()
     if source_lang != 'en':
-       query_string = translate_query(TextBlob(query_string), source_lang)
+        query_string = translate_query(TextBlob(query_string), source_lang)
     else:
         pass
 
-    query_tokens = query_string.split()
     vectorizer = gv
-    matrix = g_matrix
+    matrix = get_matrix(doc)
 
     # Vectorize query string
     query_vec = vectorizer.transform([query_string]).tocsc()
 
     # Cosine similarity
     hits = np.dot(query_vec, matrix)
+
 
     # Rank hits
     ranked_scores_and_doc_ids = sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
@@ -61,24 +68,32 @@ app = Flask(__name__)
 @app.route('/search')
 def search():
     nlp = spacy.load("en_core_web_sm")
-    matches = []
     #Get query from URL variable
-    query = request.args.get('query')
+    proverb_query = request.args.get('proverb')
+    meaning_query = request.args.get('meaning')
     #Initialize list of matches
-    matches2 = []
-    testi = []
-    if query:
-        matches = search_documents(query)
+    proverb_matches = []
+    meaning_matches = []
+    proverb_results = []
+    meaning_results = []
+    if proverb_query:
+        matches = search_documents(proverb_query, proverb_document)
         for elem in matches:
-            matches2.append(documents[elem[1]])
-            doc = nlp(documents[elem[1]])
+            proverb_matches.append(proverb_document[elem[1]])
+            doc = nlp(proverb_document[elem[1]])
             svg = displacy.render(doc, style="dep", jupyter=False)
             file_name = '-'.join([w.text for w in doc if not w.is_punct]) + ".svg"
             print(file_name)
             output_path = Path("static/" + file_name)
             output_path.open("w", encoding="utf-8").write(svg)
-            testi.append({'name': doc, 'pltpath': output_path})
-
+            proverb_results.append({'name': doc, 'pltpath': output_path})
+    elif meaning_query:
+        matches2 = search_documents(meaning_query, meaning_document)
+        for elem in matches2:
+            meaning_matches.append(meaning_document[elem[1]])
+            doc = nlp(meaning_document[elem[1]])
+            meaning_results.append({'name2': doc})
 
     #Render index.html with matches variable
-    return render_template('index.html', matches=testi[:5])
+    return render_template('index.html', matches=proverb_results[:5], matches2=meaning_results[:5])
+
