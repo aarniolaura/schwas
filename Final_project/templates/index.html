@@ -54,7 +54,7 @@
 
        <!--Reload the page with variable "query" in the URL-->
         <form>
-            <input type="text" name="query" autofocus>
+            <input type="text" name="proverb" autofocus>
             <input type="submit" value="Search">
 
         </form>
@@ -66,6 +66,20 @@
                 <!--Display the name of the item based on the "name" key-->
                 <th><br>{{ item['name'] }}</br></th>
             <tr><td><br><img src="{{ item['pltpath'] }}" class="center"></br></td></tr>
+            <!--End for loop-->
+            {% endfor %}
+        </ol>
+              <form>
+            <input type="text" name="meaning" autofocus>
+            <input type="submit" value="Search">
+
+        </form>
+              <ol>
+            <!--Go through each item in the "matches" variable sent from
+                search() function in the Flask app-->
+            {% for item in matches2 %}
+                <!--Display the name of the item based on the "name" key-->
+                <th><br>{{ item['name2'] }}</br></th>
             <!--End for loop-->
             {% endfor %}
         </ol>
