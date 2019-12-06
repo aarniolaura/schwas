@@ -24,7 +24,7 @@ try:
 except OSError:
     print("Error reading the file", file_name)
 
-proverb_document = text_doc.split('<ENDS HERE>')
+proverb_document = text_doc.split('\n<ENDS HERE>')
 
 text_doc = ""
 file_name = "meanings_A-D_en.txt"
@@ -35,7 +35,7 @@ try:
 except OSError:
     print("Error reading the file", file_name)
 
-meaning_document = text_doc.split('<ENDS HERE>')
+meaning_document = text_doc.split('\n<ENDS HERE>')
 
 # tokenizer for stemming
 def textblob_tokenizer(str_input):
@@ -68,9 +68,11 @@ def search_documents(query_string, doc):
     # Cosine similarity
     hits = np.dot(query_vec, matrix)
 
+
     # Rank hits
     ranked_scores_and_doc_ids = sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
-                                       reverse=True)
+                                           reverse=True)
+
     return ranked_scores_and_doc_ids
 
 # create a dependency tree for a proverb (svg image)
@@ -111,18 +113,23 @@ def search():
 
     # if user enters a query into the first search field:
     if proverb_query:
-        matches = search_documents(proverb_query, proverb_document)
-        # matches is a list of tuples (relevance_score, doc_id)
-        for elem in matches:
-            # make a list of all matching documents:
-            proverb_matches.append(proverb_document[elem[1]])
+        try:
+            matches = search_documents(proverb_query, proverb_document)
 
-            # create image
-            doc = proverb_document[elem[1]]
-            output_path = create_tree(doc, nlp)
+            # matches is a list of tuples (relevance_score, doc_id)
+            for elem in matches:
+                # make a list of all matching documents:
+                proverb_matches.append(proverb_document[elem[1]])
 
-            # make a list of dicts that have doc_id and path to corresponding image:
-            proverb_results.append({'name': doc, 'pltpath': output_path})
+                # create image
+                doc = proverb_document[elem[1]]
+                output_path = create_tree(doc, nlp)
+
+                # make a list of dicts that have doc_id and path to corresponding image:
+                proverb_results.append({'name': doc, 'pltpath': output_path})
+
+        except IndexError:
+            print("Something went wrong")
 
     # if user enters a query into the second search field:
     elif meaning_query:

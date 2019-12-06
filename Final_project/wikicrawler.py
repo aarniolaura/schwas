@@ -67,9 +67,9 @@ def add_meanings(pagelist):
     return meaning_list
 
 def write_to_file(list, filename):
-    with open(filename, "w", encoding="utf-8") as file:
+    with open(filename, "w", encoding="utf-8") as file: # change 'w' to 'a' to append
         for item in list:
-            file.write(item + "\n <ENDS HERE>")
+            file.write(item + "\n<ENDS HERE>")
             # add some word to split the file later (<END>)
 
     file.close()
