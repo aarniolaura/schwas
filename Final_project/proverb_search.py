@@ -7,14 +7,14 @@ from spacy import displacy
 from pathlib import Path
 import re
 
-# data
+# data (from phrases.org.uk)
 # with open('proverbs.txt', 'r') as f:
 #     proverb_document = f.read().splitlines()
 #
 # with open('meanings.txt', 'r') as f:
 #     meaning_document = f.read().splitlines()
 
-# DATA
+# DATA from wiktionary
 text_doc = ""
 file_name = "proverbs_A-D_en.txt"
 try:
