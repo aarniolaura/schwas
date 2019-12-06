@@ -29,8 +29,8 @@ A horse, a horse, my kingdom for a horse
 A house divided against itself cannot stand
 A journey of a thousand miles begins with a single step
 A knight in shining armour
-� la carte
-� la mode
+À la carte
+À la mode
 A legend in one's own lifetime
 A leopard cannot change its spots
 A little bird told me
@@ -109,7 +109,7 @@ Age before beauty
 Age cannot wither her, nor custom stale her infinite variety
 Agree to disagree
 Aid and abet
-Aide-m�moire
+Aide-mémoire
 Air kiss
 Air quotes
 Al fresco
@@ -133,7 +133,7 @@ All things come to those who wait
 All things must pass
 All you can eat
 All's fair in love and war
- Alter ego
+Alter ego
 Amber nectar
 An albatross around one's neck
 An apple a day keeps the doctor away
@@ -1301,7 +1301,7 @@ Meat and two veg.
 Meet your Waterloo
 Men in suits
 Mend fences
-M�nage � trois
+Ménage à trois
 Men's evil manners live in brass; their virtues we write in water
 Merry Christmas
 Method in my madness

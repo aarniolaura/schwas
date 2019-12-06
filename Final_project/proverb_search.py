@@ -92,16 +92,9 @@ def search():
             # make a list of all matching documents:
             proverb_matches.append(proverb_document[elem[1]])
 
+            # create image
             doc = proverb_document[elem[1]]
             output_path = create_tree(doc, nlp)
-
-            # create an svg image of the dependency tree (this is now a function)
-            # doc = nlp(proverb_document[elem[1]])
-            # svg = displacy.render(doc, style="dep", jupyter=False)
-            # file_name = '-'.join([w.text for w in doc if not w.is_punct]) + ".svg"
-            # print(file_name)
-            # output_path = Path("static/" + file_name)
-            # output_path.open("w", encoding="utf-8").write(svg)
 
             # make a list of dicts that have doc_id and path to corresponding image:
             proverb_results.append({'name': doc, 'pltpath': output_path})
@@ -117,3 +110,7 @@ def search():
     #Render index.html with matches variable
     return render_template('index.html', matches=proverb_results[:5], matches2=meaning_results[:5])
 
+# IndexError
+#
+# IndexError: too many indices for array
+# textblob.exceptions.NotTranslated
