@@ -56,16 +56,17 @@ for page in pagelist:
                   headers={'User-Agent': 'Mozilla/5.0'})
     webpage = urlopen(req).read()
     raw = BeautifulSoup(webpage, 'html.parser').get_text()
-    start = raw.find("What's the meaning of the phrase")
+    start = raw.find("What's the meaning of")
     end = raw.find("What's the origin of the phrase")
     content = raw[start:end]
+
     print(content)
 
  #   content = crawl(page)
   #  meaning_list.append(content)
 
 
-req = Request('https://www.phrases.org.uk//meanings/a-horse-a-horse-my-kingdom-for-a-horse.html', headers={'User-Agent': 'Mozilla/5.0'})
+req = Request('https://www.phrases.org.uk/meanings/abracadabra.html', headers={'User-Agent': 'Mozilla/5.0'})
 webpage = urlopen(req).read()
 raw = BeautifulSoup(webpage, 'html.parser').get_text()
 start = raw.find("What's the meaning of the phrase")

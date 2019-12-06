@@ -67,6 +67,8 @@ app = Flask(__name__)
 #Function search() is associated with the address base URL + "/search"
 @app.route('/search')
 def search():
+    #nlp = spacy.load("en")
+
     nlp = spacy.load("en_core_web_sm")
     #Get query from URL variable
     proverb_query = request.args.get('proverb')
