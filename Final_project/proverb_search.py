@@ -8,12 +8,34 @@ from pathlib import Path
 import re
 
 # data
-with open('proverbs.txt', 'r') as f:
-    proverb_document = f.read().splitlines()
+# with open('proverbs.txt', 'r') as f:
+#     proverb_document = f.read().splitlines()
+#
+# with open('meanings.txt', 'r') as f:
+#     meaning_document = f.read().splitlines()
 
-with open('meanings.txt', 'r') as f:
-    meaning_document = f.read().splitlines()
+# DATA
+text_doc = ""
+file_name = "proverbs_A-D_en.txt"
+try:
+    file = open(file_name, "r", encoding='utf-8')
+    text_doc = file.read()
+    file.close()
+except OSError:
+    print("Error reading the file", file_name)
 
+proverb_document = text_doc.split('<ENDS HERE>')
+
+text_doc = ""
+file_name = "meanings_A-D_en.txt"
+try:
+    file = open(file_name, "r", encoding='utf-8')
+    text_doc = file.read()
+    file.close()
+except OSError:
+    print("Error reading the file", file_name)
+
+meaning_document = text_doc.split('<ENDS HERE>')
 
 # tokenizer for stemming
 def textblob_tokenizer(str_input):
@@ -71,6 +93,9 @@ app = Flask(__name__)
 #Function search() is associated with the address base URL + "/search"
 @app.route('/search')
 def search():
+
+    # remember to delete old images from static!
+
     # for creating dependency trees
     nlp = spacy.load("en_core_web_sm")
 

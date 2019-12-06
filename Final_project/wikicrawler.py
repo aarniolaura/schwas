@@ -45,7 +45,7 @@ def add_meanings(pagelist):
         raw = get_text(url)
 
         start = raw.find("Proverb[edit]")
-
+        start = start + 13
         end = raw.find("Translations[edit]")
         if end == -1:
             end = raw.find("References[edit]")
