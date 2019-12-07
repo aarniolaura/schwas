@@ -113,6 +113,8 @@ def search():
     proverb_results = [] # a list of dicts {'name': doc, 'pltpath': output_path(of the image)}
     meaning_results = []
 
+    matches = []
+
     # if user enters a query into the first search field:
     if proverb_query:
         try:
@@ -121,28 +123,45 @@ def search():
             # matches is a list of tuples (relevance_score, doc_id)
             for elem in matches:
                 # make a list of all matching documents:
+                doc_id = elem[1]
                 proverb_matches.append(proverb_document[elem[1]])
 
                 # create image
-                doc = proverb_document[elem[1]]
-                output_path = create_tree(doc, nlp_en)
+                proverb = proverb_document[doc_id]
+                output_path = create_tree(proverb, nlp_en)
 
-                # make a list of dicts that have doc_id and path to corresponding image:
-                proverb_results.append({'name': doc, 'pltpath': output_path})
+                meaning = meaning_document[doc_id]
+
+                proverb_results.append({'name': proverb, 'meaning':meaning, 'pltpath': output_path})
+                matches = proverb_results
 
         except IndexError:
             print("Something went wrong")
 
     # if user enters a query into the second search field:
     elif meaning_query:
-        matches2 = search_documents(meaning_query, meaning_document)
-        for elem in matches2:
-            meaning_matches.append(meaning_document[elem[1]])
-            doc = nlp_en(meaning_document[elem[1]])
-            meaning_results.append({'name2': doc})
+        try:
+            matches = search_documents(meaning_query, meaning_document)
+
+            # matches is a list of tuples (relevance_score, doc_id)
+            for elem in matches:
+                # make a list of all matching documents:
+                doc_id = elem[1]
+                meaning_matches.append(proverb_document[doc_id])
+
+                # create image
+                proverb = proverb_document[doc_id]
+                output_path = create_tree(proverb, nlp_en)
+
+                meaning = meaning_document[doc_id]
+
+                meaning_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
+                matches = meaning_results
+        except IndexError:
+            print("Something went wrong")
 
     #Render index.html with matches variable
-    return render_template('index.html', matches=proverb_results[:5], matches2=meaning_results[:5])
+    return render_template('index.html', matches=matches[:5])
 
 # IndexError
 #

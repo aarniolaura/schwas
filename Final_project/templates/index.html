@@ -1,10 +1,10 @@
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Proverb Search Engine</title>
-    </head>
-    <body>
-      <style type="text/css">
+<head>
+    <meta charset="utf-8">
+    <title>Proverb Search Engine</title>
+</head>
+<body>
+<style type="text/css">
   body {
     padding-left: 11em;
     font-family:  Helvetica,Helvetica Neue,sans-serif;
@@ -38,57 +38,60 @@
   list-style-type: none;
   }
 }
-  </style>
-</head>
-      <div class="content">
+
+</style>
+<div class="content">
     <!-- Site navigation menu -->
-        <ul class="navbar">
+    <ul class="navbar">
         <li><a href="http://127.0.0.1:8000/search">Reset</a>
         <li><a href="https://github.com/aarniolaura/schwas/tree/master/Final_project">Github</a>
-</ul>
+    </ul>
 
-          <h1>Find proverbs</h1>
-      <p><small>Search for a part of a proverb you can't remember fully<br>
-        or for a proverb in another language to find the English equivalent!
-          <br></small></p>
+    <h1>Find proverbs</h1>
+    <p>Search for a part of a proverb you can't remember fully<br>
+       or for a proverb in another language to find out its meaning!<br>
+        You can enter your queries in any language.<br>
+        Our data contains proverbs in English, Spanish (soon) and Finnish (soon).<br>
+    </p>
+    <form>Find proverbs in
+        <select>
+            <option value="english">English</option>
+            <option value="spanish">Spanish</option>
+            <option value="finnish">Finnish</option>
+    </select></form>
 
-       <!--Reload the page with variable "query" in the URL-->
-        <form>
-            <input type="text" name="proverb" autofocus>
-            <input type="submit" value="Search">
-
-        </form>
-          <table>
+    <!--Reload the page with variable "query" in the URL-->
+    <form>Find proverbs that contain the word(s)
+        <input type="text" name="proverb" value="word" autofocus>
+        <input type="submit" value="Search">
+    </form>
+    <form> Find proverbs that have the meaning
+         <input type="text" name="meaning" value="meaning" autofocus>
+         <input type="submit" value="Search">
+    </form>
+    <table>
         <ol>
             <!--Go through each item in the "matches" variable sent from
                 search() function in the Flask app-->
             {% for item in matches %}
-                <!--Display the name of the item based on the "name" key-->
-                <th><br>{{ item['name'] }}</br></th>
-            <tr><td><br><img width="800px" src="{{ item['pltpath'] }}" class="center"></br></td></tr>
+            <!--Display the name of the item based on the "name" key-->
+            <tr>
+                <th>Proverb: {{ item['name'] }}</th>
+            </tr>
+            <tr>
+                <td>Meaning: {{ item['meaning'] }}
+                </td>
+            </tr>
+            <tr>
+                <td><br><img width="800px" src="{{ item['pltpath'] }}" class="center"></br></td>
+            </tr>
             <!--End for loop-->
             {% endfor %}
         </ol>
-              <form>
-            <input type="text" name="meaning" autofocus>
-            <input type="submit" value="Search">
-
-        </form>
-              <ol>
-            <!--Go through each item in the "matches" variable sent from
-                search() function in the Flask app-->
-            {% for item in matches2 %}
-                <!--Display the name of the item based on the "name" key-->
-                <th><br>{{ item['name2'] }}</br></th>
-            <!--End for loop-->
-            {% endfor %}
-        </ol>
-          </table>
-
-      <hr>
+    </table>
     <address>By Laura & Teemu<br>
-</address>
-          </div>
-    </body>
+    </address>
+</div>
+</body>
 </html>
                                
