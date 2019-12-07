@@ -77,9 +77,9 @@ def search_documents(query_string, doc):
 
 # create a dependency tree for a proverb (svg image)
 def create_tree(doc, nlp):
-    #nlp = spacy.load("en_core_web_sm")
     doc = nlp(doc)
-    svg = displacy.render(doc, style="dep", jupyter=False)
+    options = {"color": "#D3F4F8", "bg": "#082F49"}
+    svg = displacy.render(doc, style="dep", options=options, jupyter=False)
     file_name = '-'.join([w.text for w in doc if not w.is_punct]) + ".svg"
     print(file_name)
     output_path = Path("static/" + file_name)
@@ -99,7 +99,9 @@ def search():
     # remember to delete old images from static!
 
     # for creating dependency trees
-    nlp = spacy.load("en_core_web_sm")
+    nlp_en = spacy.load("en_core_web_sm")
+    nlp_es = spacy.load("es_core_news_sm") # HUOM! muista ladata: python -m spacy download es_core_news_sm
+    # finnish dependency data does not exist yet in spacy
 
     #Get query from URL variable
     proverb_query = request.args.get('proverb')
@@ -123,7 +125,7 @@ def search():
 
                 # create image
                 doc = proverb_document[elem[1]]
-                output_path = create_tree(doc, nlp)
+                output_path = create_tree(doc, nlp_en)
 
                 # make a list of dicts that have doc_id and path to corresponding image:
                 proverb_results.append({'name': doc, 'pltpath': output_path})
@@ -136,7 +138,7 @@ def search():
         matches2 = search_documents(meaning_query, meaning_document)
         for elem in matches2:
             meaning_matches.append(meaning_document[elem[1]])
-            doc = nlp(meaning_document[elem[1]])
+            doc = nlp_en(meaning_document[elem[1]])
             meaning_results.append({'name2': doc})
 
     #Render index.html with matches variable

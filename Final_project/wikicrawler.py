@@ -108,7 +108,7 @@ def main():
     for title, content in meaning_list:
         m_list.append(content)
 
-    write_to_file(p_list, "proverbs_A-D_en.txt")
-    write_to_file(m_list, "meanings_A-D_en.txt")
+    write_to_file(p_list, "proverbs_en.txt")
+    write_to_file(m_list, "meanings_en.txt")
 
 main()
