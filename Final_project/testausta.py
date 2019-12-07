@@ -1,25 +1,6 @@
-# DATA
-text_doc = ""
-file_name = "proverbs_A-D_en.txt"
-try:
-    file = open(file_name, "r", encoding='utf-8')
-    text_doc = file.read()
-    file.close()
-except OSError:
-    print("Error reading the file", file_name)
+import spacy
+from spacy import displacy
 
-# Split into lists of strings (each article is a string)
-proverb_document = text_doc.split('\n<ENDS HERE>')
-
-text_doc = ""
-file_name = "meanings_A-D_en.txt"
-try:
-    file = open(file_name, "r", encoding='utf-8')
-    text_doc = file.read()
-    file.close()
-except OSError:
-    print("Error reading the file", file_name)
-
-meaning_document = text_doc.split('<ENDS HERE>')
-
-print(proverb_document[5:10])
+nlp = spacy.load("en_core_web_sm")
+doc = nlp("This is a sentence.")
+displacy.serve(doc, style="dep")

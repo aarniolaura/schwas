@@ -29,12 +29,3 @@ Proverb search engine with following features:
 - ✧ visually dashing (and elegant) user interface ✧
   - maybe first listing the matching idioms and then if you click one you get the explanation (and an image)
 
-https://en.wiktionary.org/w/index.php?title=Category:English_proverbs&pagefrom=DANCE+WITH+THE+ONE+WHAT+BRUNG+YA%0Adance+with+the+one+what+brung+ya#mw-pages
-https://en.wiktionary.org/w/index.php?title=Category:English_proverbs&pagefrom=IN+FOR+A+PENNY%2C+IN+FOR+A+POUND%0Ain+for+a+penny%2C+in+for+a+pound#mw-pages
-https://en.wiktionary.org/w/index.php?title=Category:English_proverbs&pagefrom=ONE+HAIR+OF+A+WOMAN+CAN+DRAW+MORE+THAN+A+HUNDRED+PAIR+OF+OXEN%0Aone+hair+of+a+woman+can+draw+more+than+a+hundred+pair+of+oxen#mw-pages
-https://en.wiktionary.org/w/index.php?title=Category:English_proverbs&pagefrom=THE+MORE+THINGS+CHANGE%2C+THE+MORE+THEY+STAY+THE+SAME%0Athe+more+things+change%2C+the+more+they+stay+the+same#mw-pages
-https://en.wiktionary.org/w/index.php?title=Category:English_proverbs&pagefrom=YOU+CAN+CATCH+MORE+FLIES+WITH+HONEY+THAN+VINEGAR%0Ayou+can+catch+more+flies+with+honey+than+vinegar#mw-pages
-
-https://en.wiktionary.org/wiki/Category:Spanish_proverbs
-
-https://en.wiktionary.org/wiki/Category:Finnish_proverbs

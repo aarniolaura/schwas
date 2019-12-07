@@ -16,7 +16,7 @@ import re
 
 # DATA from wiktionary
 text_doc = ""
-file_name = "proverbs_A-D_en.txt"
+file_name = "proverbs_en.txt"
 try:
     file = open(file_name, "r", encoding='utf-8')
     text_doc = file.read()
@@ -27,7 +27,7 @@ except OSError:
 proverb_document = text_doc.split('\n<ENDS HERE>')
 
 text_doc = ""
-file_name = "meanings_A-D_en.txt"
+file_name = "meanings_en.txt"
 try:
     file = open(file_name, "r", encoding='utf-8')
     text_doc = file.read()
