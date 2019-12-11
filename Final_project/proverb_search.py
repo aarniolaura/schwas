@@ -55,17 +55,24 @@ def get_matrix(doc):
     g_matrix = gv.fit_transform(doc).T.tocsr()
     return g_matrix
 
-def translate_query(query_string, source_lang, target_lang):
-    query_blob = query_string.translate(from_lang=source_lang, to=target_lang)
+def translate_query(query_string, target_lang):
+    source_lang = TextBlob(query_string).detect_language()
+
+    if source_lang != target_lang:
+        query_string = TextBlob(query_string)
+        query_blob = query_string.translate(from_lang=source_lang, to=target_lang)
+    else:
+        query_blob = query_string
     return str(query_blob)
 
-def search_documents(query_string, doc, language):
-    target_lang = language
-    source_lang = TextBlob(query_string).detect_language()
-    if source_lang != target_lang:
-        query_string = translate_query(TextBlob(query_string), source_lang, target_lang)
-    else:
-        pass
+def search_documents(query_string, doc):
+    # target_lang = language
+    # source_lang = TextBlob(query_string).detect_language()
+    #
+    # if source_lang != target_lang:
+    #     query_string = translate_query(TextBlob(query_string), source_lang, target_lang)
+    # else:
+    #     pass
 
     vectorizer = gv
     matrix = get_matrix(doc)
@@ -98,7 +105,6 @@ app = Flask(__name__)
 #Function search() is associated with the address base URL + "/search"
 @app.route('/search')
 def search():
-
     # remember to delete old images from static!
 
     # for creating dependency trees
@@ -139,7 +145,8 @@ def search():
     # if user enters a query into the first search field:
     if proverb_query:
         try:
-            matches = search_documents(proverb_query, proverb_document, language)
+            proverb_query = translate_query(proverb_query, language)
+            matches = search_documents(proverb_query, proverb_document)
 
             # matches is a list of tuples (relevance_score, doc_id)
             for elem in matches:
@@ -147,17 +154,19 @@ def search():
                 doc_id = elem[1]
                 proverb_matches.append(proverb_document[elem[1]])
 
-                # create image
-
                 proverb = proverb_document[doc_id]
-                if language != 'fi':
-                    output_path = create_tree(proverb, nlp)
-                else:
-                    output_path = Path("static/000_no_image.svg")
-
                 meaning = meaning_document[doc_id]
 
-                proverb_results.append({'name': proverb, 'meaning':meaning, 'pltpath': output_path})
+                # create image
+                if language != 'fi':
+                    output_path = create_tree(proverb, nlp)
+                    proverb_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
+
+                else:
+                    #output_path = Path("static/000_no_image.svg")
+                    proverb_results.append({'name': proverb, 'meaning':meaning})
+
+                #proverb_results.append({'name': proverb, 'meaning':meaning, 'pltpath': output_path})
                 matches = proverb_results
 
         except IndexError:
@@ -174,14 +183,21 @@ def search():
                 doc_id = elem[1]
                 meaning_matches.append(proverb_document[doc_id])
 
-                # create image
-                proverb = proverb_document[doc_id]
-                output_path = create_tree(proverb, nlp)
-
                 meaning = meaning_document[doc_id]
+                proverb = proverb_document[doc_id]
 
-                meaning_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
+                # create image
+                if language != 'fi':
+                    output_path = create_tree(proverb, nlp)
+                    meaning_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
+
+                else:
+                    # output_path = Path("static/000_no_image.svg")
+                    meaning_results.append({'name': proverb, 'meaning': meaning})
+
+                #meaning_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
                 matches = meaning_results
+
         except IndexError:
             print("Something went wrong")
 
