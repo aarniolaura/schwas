@@ -1,7 +1,7 @@
 import re
 
 text_doc = ""
-file_name = "meanings_en.txt"
+file_name = "meanings_es.txt"
 try:
     file = open(file_name, "r", encoding='utf-8')
     text_doc = file.read()
@@ -12,9 +12,8 @@ except OSError:
 list = text_doc.split('\n<ENDS HERE>')
 
 
-filename = "edit_mean.txt"
 
-with open(filename, "w", encoding="utf-8") as file:  # change 'w' to 'a' to append
+with open(file_name, "w", encoding="utf-8") as file:  # change 'w' to 'a' to append
     for item in list:
         pois = item.find("\n")
         item = item[pois+1:]
