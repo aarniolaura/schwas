@@ -153,7 +153,7 @@ def search():
                 if language != 'fi':
                     output_path = create_tree(proverb, nlp)
                 else:
-                    output_path = Path("static/no_image.svg")
+                    output_path = Path("static/000_no_image.svg")
 
                 meaning = meaning_document[doc_id]
 
