@@ -85,7 +85,7 @@ def write_to_file(list, filename):
 def main():
     # https://en.wiktionary.org/w/index.php?title=Category:English_proverbs&pagefrom=YOU+CAN+CATCH+MORE+FLIES+WITH+HONEY+THAN+VINEGAR%0Ayou+can+catch+more+flies+with+honey+than+vinegar#mw-pages
 
-    pagelist = web(1,'https://en.wiktionary.org/wiki/Category:Spanish_proverbs')
+    pagelist = web(1,'https://en.wiktionary.org/wiki/Category:Finnish_proverbs')
 
     print(len(pagelist))
     i = 0
@@ -96,7 +96,7 @@ def main():
         print()
         i +=1
 
-    pagelist = pagelist[35:162]
+    pagelist = pagelist[39:198]
 
     meaning_list = add_meanings(pagelist)
 
@@ -108,7 +108,7 @@ def main():
     for title, content in meaning_list:
         m_list.append(content)
 
-    write_to_file(p_list, "proverbs_es.txt")
-    write_to_file(m_list, "meanings_es.txt")
+    write_to_file(p_list, "proverbs_fi.txt")
+    write_to_file(m_list, "meanings_fi.txt")
 
 main()

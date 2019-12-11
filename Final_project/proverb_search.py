@@ -38,7 +38,11 @@ proverbs_es = text_doc.split('\n<ENDS HERE>')
 text_doc = data_from_file("meanings_es.txt")
 meanings_es = text_doc.split('\n<ENDS HERE>')
 
+text_doc = data_from_file("proverbs_fi.txt")
+proverbs_fi = text_doc.split('\n<ENDS HERE>')
 
+text_doc = data_from_file("meanings_fi.txt")
+meanings_fi = text_doc.split('\n<ENDS HERE>')
 
 # tokenizer for stemming
 def textblob_tokenizer(str_input):
@@ -65,18 +69,13 @@ def search_documents(query_string, doc, language):
 
     vectorizer = gv
     matrix = get_matrix(doc)
-
     # Vectorize query string
     query_vec = vectorizer.transform([query_string]).tocsc()
-
     # Cosine similarity
     hits = np.dot(query_vec, matrix)
-
-
     # Rank hits
     ranked_scores_and_doc_ids = sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
                                            reverse=True)
-
     return ranked_scores_and_doc_ids
 
 # create a dependency tree for a proverb (svg image)
@@ -125,6 +124,10 @@ def search():
         meaning_document = meanings_es
         nlp = nlp_es
 
+    elif language == 'fi':
+        proverb_document = proverbs_fi
+        meaning_document = meanings_fi
+
     #Initialize list of matches
     proverb_matches = [] # all the docs that matched the proverb or meaning query
     meaning_matches = []
@@ -145,8 +148,12 @@ def search():
                 proverb_matches.append(proverb_document[elem[1]])
 
                 # create image
+
                 proverb = proverb_document[doc_id]
-                output_path = create_tree(proverb, nlp)
+                if language != 'fi':
+                    output_path = create_tree(proverb, nlp)
+                else:
+                    output_path = Path("static/no_image.svg")
 
                 meaning = meaning_document[doc_id]
 
@@ -179,7 +186,7 @@ def search():
             print("Something went wrong")
 
     #Render index.html with matches variable
-    return render_template('index.html', matches=matches)
+    return render_template('index.html', matches=matches[:5])
 
 # IndexError
 #

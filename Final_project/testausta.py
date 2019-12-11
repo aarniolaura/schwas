@@ -1,7 +1,7 @@
 import re
 
 text_doc = ""
-file_name = "meanings_es.txt"
+file_name = "meanings_fi.txt"
 try:
     file = open(file_name, "r", encoding='utf-8')
     text_doc = file.read()
