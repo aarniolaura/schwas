@@ -15,27 +15,30 @@ import re
 #     meaning_document = f.read().splitlines()
 
 # DATA from wiktionary
-text_doc = ""
-file_name = "proverbs_en.txt"
-try:
-    file = open(file_name, "r", encoding='utf-8')
-    text_doc = file.read()
-    file.close()
-except OSError:
-    print("Error reading the file", file_name)
 
-proverb_document = text_doc.split('\n<ENDS HERE>')
+def data_from_file(file_name):
+    text_doc = ""
+    try:
+        file = open(file_name, "r", encoding='utf-8')
+        text_doc = file.read()
+        file.close()
+    except OSError:
+        print("Error reading the file", file_name)
+    return text_doc
 
-text_doc = ""
-file_name = "meanings_en.txt"
-try:
-    file = open(file_name, "r", encoding='utf-8')
-    text_doc = file.read()
-    file.close()
-except OSError:
-    print("Error reading the file", file_name)
+text_doc = data_from_file("proverbs_en.txt")
+proverbs_en = text_doc.split('\n<ENDS HERE>')
 
-meaning_document = text_doc.split('\n<ENDS HERE>')
+text_doc = data_from_file("meanings_en.txt")
+meanings_en = text_doc.split('\n<ENDS HERE>')
+
+text_doc = data_from_file("proverbs_es.txt")
+proverbs_es = text_doc.split('\n<ENDS HERE>')
+
+text_doc = data_from_file("meanings_es.txt")
+meanings_es = text_doc.split('\n<ENDS HERE>')
+
+
 
 # tokenizer for stemming
 def textblob_tokenizer(str_input):
@@ -48,14 +51,15 @@ def get_matrix(doc):
     g_matrix = gv.fit_transform(doc).T.tocsr()
     return g_matrix
 
-def translate_query(query_string, source_lang):
-    query_blob = query_string.translate(from_lang=source_lang, to='en')
+def translate_query(query_string, source_lang, target_lang):
+    query_blob = query_string.translate(from_lang=source_lang, to=target_lang)
     return str(query_blob)
 
-def search_documents(query_string, doc):
+def search_documents(query_string, doc, language):
+    target_lang = language
     source_lang = TextBlob(query_string).detect_language()
-    if source_lang != 'en':
-        query_string = translate_query(TextBlob(query_string), source_lang)
+    if source_lang != target_lang:
+        query_string = translate_query(TextBlob(query_string), source_lang, target_lang)
     else:
         pass
 
@@ -107,6 +111,20 @@ def search():
     proverb_query = request.args.get('proverb')
     meaning_query = request.args.get('meaning')
 
+    # get language from url variable
+    language = request.args.get('language')
+    print(str(language))
+
+    # default = english
+    proverb_document = proverbs_en
+    meaning_document = meanings_en
+    nlp = nlp_en
+
+    if language == 'es':
+        proverb_document = proverbs_es
+        meaning_document = meanings_es
+        nlp = nlp_es
+
     #Initialize list of matches
     proverb_matches = [] # all the docs that matched the proverb or meaning query
     meaning_matches = []
@@ -118,7 +136,7 @@ def search():
     # if user enters a query into the first search field:
     if proverb_query:
         try:
-            matches = search_documents(proverb_query, proverb_document)
+            matches = search_documents(proverb_query, proverb_document, language)
 
             # matches is a list of tuples (relevance_score, doc_id)
             for elem in matches:
@@ -128,7 +146,7 @@ def search():
 
                 # create image
                 proverb = proverb_document[doc_id]
-                output_path = create_tree(proverb, nlp_en)
+                output_path = create_tree(proverb, nlp)
 
                 meaning = meaning_document[doc_id]
 
@@ -151,7 +169,7 @@ def search():
 
                 # create image
                 proverb = proverb_document[doc_id]
-                output_path = create_tree(proverb, nlp_en)
+                output_path = create_tree(proverb, nlp)
 
                 meaning = meaning_document[doc_id]
 
@@ -161,7 +179,7 @@ def search():
             print("Something went wrong")
 
     #Render index.html with matches variable
-    return render_template('index.html', matches=matches[:5])
+    return render_template('index.html', matches=matches)
 
 # IndexError
 #

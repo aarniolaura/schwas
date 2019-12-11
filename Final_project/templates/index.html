@@ -49,25 +49,33 @@
 
     <h1>Find proverbs</h1>
     <p>Search for a part of a proverb you can't remember fully<br>
-       or for a proverb in another language to find out its meaning!<br>
-        You can enter your queries in any language.<br>
-        Our data contains proverbs in English, Spanish (soon) and Finnish (soon).<br>
+       or for a proverb in another language to find out its meaning!<br><br>
+
+        Our data contains proverbs in English, Spanish and Finnish (soon).<br>
+        You can enter your query in any language. It will be translated<br>
+        to your target language. <br>
     </p>
-    <form>Find proverbs in
-        <select>
-            <option value="english">English</option>
-            <option value="spanish">Spanish</option>
-            <option value="finnish">Finnish</option>
-    </select></form>
 
     <!--Reload the page with variable "query" in the URL-->
     <form>Find proverbs that contain the word(s)
-        <input type="text" name="proverb" value="word" autofocus>
+        <input type="text" name="proverb" autofocus>
         <input type="submit" value="Search">
+        Language:
+        <select name="language">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fi">Finnish</option>
+        </select>
     </form>
     <form> Find proverbs that have the meaning
-         <input type="text" name="meaning" value="meaning" autofocus>
+         <input type="text" name="meaning" autofocus>
          <input type="submit" value="Search">
+        Language:
+        <select name="language">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="fi">Finnish</option>
+        </select>
     </form>
     <table>
         <ol>
