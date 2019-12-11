@@ -202,7 +202,7 @@ def search():
             print("Something went wrong")
 
     #Render index.html with matches variable
-    return render_template('index.html', matches=matches[:5])
+    return render_template('index.html', matches=matches[:20])
 
 # IndexError
 #
