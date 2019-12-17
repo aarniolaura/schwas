@@ -128,6 +128,7 @@ def downloadimages(query):
                  "aspect_ratio": "panoramic",
                  "output_directory": 'static',
                  "no_directory": True}
+    paths = response.download(arguments)
     try:
         response.download(arguments)
 
@@ -146,7 +147,12 @@ def downloadimages(query):
             response.download(arguments)
         except:
             pass
-
+    result = paths[0].values()
+    result = ''.join(result)
+    print("Hiiii :", result)
+    result = os.path.relpath(str(result))
+    print("THIS IS THE PATH: ", result)
+    return result
 
 # create normal tf-idf vectors with stemming
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
@@ -213,6 +219,7 @@ def search():
                 # create image
                 if language != 'fi':
                     output_path = downloadimages(proverb) #create_tree(proverb, nlp)
+                    print("THIS: ", output_path)
                     proverb_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
 
                 else:
