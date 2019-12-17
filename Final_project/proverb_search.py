@@ -147,7 +147,7 @@ def downloadimages(query):
             response.download(arguments)
         except:
             pass
-    result = [''.join(value) for key,value in paths[0].items()]
+    result = [os.path.relpath(''.join(value)) for key,value in paths[0].items()]
     result = Path(result[0])
     return result
 
