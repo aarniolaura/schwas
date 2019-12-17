@@ -6,6 +6,8 @@ import spacy
 from spacy import displacy
 from pathlib import Path
 import re
+import os
+import glob
 
 # data (from phrases.org.uk)
 # with open('proverbs.txt', 'r') as f:
@@ -96,15 +98,23 @@ def create_tree(doc, nlp):
     output_path.open("w", encoding="utf-8").write(svg)
     return output_path
 
+
+def remove_old_images():
+    files = glob.glob('Final_project/static/*')
+    for f in files:
+        os.remove(f)
+
+
 # create normal tf-idf vectors with stemming
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
 
 #Initialize Flask instance
 app = Flask(__name__)
-
+remove_old_images()
 #Function search() is associated with the address base URL + "/search"
 @app.route('/search')
 def search():
+    remove_old_images()
     # remember to delete old images from static!
 
     # for creating dependency trees
