@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import os
 import glob
+from google_images_download import google_images_download
 
 # data (from phrases.org.uk)
 # with open('proverbs.txt', 'r') as f:
@@ -86,7 +87,7 @@ def search_documents(query_string, doc):
     ranked_scores_and_doc_ids = sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
                                            reverse=True)
     return ranked_scores_and_doc_ids
-
+"""
 # create a dependency tree for a proverb (svg image)
 def create_tree(doc, nlp):
     doc = nlp(doc)
@@ -97,12 +98,54 @@ def create_tree(doc, nlp):
     output_path = Path("static/" + file_name)
     output_path.open("w", encoding="utf-8").write(svg)
     return output_path
+"""
 
 
 def remove_old_images():
     files = glob.glob('Final_project/static/*')
     for f in files:
         os.remove(f)
+
+response = google_images_download.googleimagesdownload()
+def downloadimages(query):
+    '''
+    pip install google_images_download
+    documentation: https://google-images-download.readthedocs.io/en/latest/arguments.html
+    '''
+    # keywords is the search query
+    # format is the image file format
+    # limit is the number of images to be downloaded
+    # print urs is to print the image file url
+    # size is the image size which can
+    # be specified manually ("large, medium, icon")
+    # aspect ratio denotes the height width ratio
+    # of images to download. ("tall, square, wide, panoramic")
+    arguments = {"keywords": query,
+                 "format": "jpg",
+                 "limit": 1,
+                 "print_urls": True,
+                 "size": "medium",
+                 "aspect_ratio": "panoramic",
+                 "output_directory": 'static',
+                 "no_directory": True}
+    try:
+        response.download(arguments)
+
+        # Handling File NotFound Error
+    except FileNotFoundError:
+        arguments = {"keywords": query,
+                     "format": "jpg",
+                     "limit": 1,
+                     "print_urls": True,
+                     "size": "medium"}
+
+        # Providing arguments for the searched query
+        try:
+            # Downloading the photos based
+            # on the given arguments
+            response.download(arguments)
+        except:
+            pass
 
 
 # create normal tf-idf vectors with stemming
@@ -169,7 +212,7 @@ def search():
 
                 # create image
                 if language != 'fi':
-                    output_path = create_tree(proverb, nlp)
+                    output_path = downloadimages(proverb) #create_tree(proverb, nlp)
                     proverb_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
 
                 else:
@@ -198,7 +241,7 @@ def search():
 
                 # create image
                 if language != 'fi':
-                    output_path = create_tree(proverb, nlp)
+                    output_path = downloadimages(proverb) #create_tree(proverb, nlp)
                     meaning_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
 
                 else:
