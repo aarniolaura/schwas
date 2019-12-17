@@ -247,9 +247,12 @@ def search():
 
                 # create image
                 if language != 'fi':
-                    output_path = downloadimages(proverb) #create_tree(proverb, nlp)
-                    meaning_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
-
+                    try:
+                        output_path = downloadimages(proverb)  # create_tree(proverb, nlp)
+                        print("THIS: ", output_path)
+                        proverb_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
+                    except ValueError:
+                        print("problem with image")
                 else:
                     # output_path = Path("static/000_no_image.svg")
                     meaning_results.append({'name': proverb, 'meaning': meaning})
