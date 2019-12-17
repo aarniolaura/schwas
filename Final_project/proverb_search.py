@@ -147,10 +147,9 @@ def downloadimages(query):
             response.download(arguments)
         except:
             pass
-    result = [os.path.relpath(''.join(value)) for key,value in paths[0].items()]
-    print(result)
-    print(result[0])
-    return result[0]
+    result = [''.join(value) for key,value in paths[0].items()]
+    result = Path(result[0])
+    return result
 
 # create normal tf-idf vectors with stemming
 gv = TfidfVectorizer(lowercase=True, sublinear_tf=True, use_idf=True, norm="l2", tokenizer=textblob_tokenizer)
