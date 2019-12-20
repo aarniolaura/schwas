@@ -102,8 +102,9 @@ def create_tree(doc, nlp):
 
 
 def remove_old_images():
-    files = glob.glob('Final_project/static/*')
+    files = glob.glob('static/*')
     for f in files:
+        print("Removing files from previous queries: ", f)
         os.remove(f)
 
 response = google_images_download.googleimagesdownload()
@@ -112,6 +113,7 @@ def downloadimages(query):
     pip install google_images_download
     documentation: https://google-images-download.readthedocs.io/en/latest/arguments.html
     '''
+    remove_old_images()
     # keywords is the search query
     # format is the image file format
     # limit is the number of images to be downloaded
