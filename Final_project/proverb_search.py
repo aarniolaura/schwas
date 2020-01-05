@@ -216,13 +216,14 @@ def search():
                 meaning = meaning_document[doc_id]
 
                 # create image
-                if language != 'fi':
+                if language != 'fi': # this can be removed
                     try:
-                        output_path = downloadimages(proverb) #create_tree(proverb, nlp)
+                        output_path = downloadimages(proverb) # find images from google
                         print("THIS: ", output_path)
                         proverb_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
                     except ValueError:
                         print("problem with image")
+                        proverb_results.append({'name': proverb, 'meaning': meaning})
                 else:
                     #output_path = Path("static/000_no_image.svg")
                     proverb_results.append({'name': proverb, 'meaning':meaning})
@@ -248,13 +249,14 @@ def search():
                 proverb = proverb_document[doc_id]
 
                 # create image
-                if language != 'fi':
+                if language != 'fi': # this can be removed
                     try:
                         output_path = downloadimages(proverb)  # create_tree(proverb, nlp)
                         print("THIS: ", output_path)
                         proverb_results.append({'name': proverb, 'meaning': meaning, 'pltpath': output_path})
                     except ValueError:
                         print("problem with image")
+                        meaning_results.append({'name': proverb, 'meaning': meaning})
                 else:
                     # output_path = Path("static/000_no_image.svg")
                     meaning_results.append({'name': proverb, 'meaning': meaning})
