@@ -12,6 +12,7 @@ Instructions for getting the proverb search engine running on a web browser:
 2. Create and activate a virtual environment (e.g. .../virtualenv/scripts/activate.bat).
 
 3. Once the venv is activated, install the following packages into it:  
+  pip install nltk  
   pip install Flask  
   pip install sklearn  
   pip install textblob  
