@@ -87,6 +87,7 @@ def search_documents(query_string, doc):
     ranked_scores_and_doc_ids = sorted(zip(np.array(hits[hits.nonzero()])[0], hits.nonzero()[1]),
                                            reverse=True)
     return ranked_scores_and_doc_ids
+
 """
 # create a dependency tree for a proverb (svg image)
 def create_tree(doc, nlp):
@@ -99,7 +100,6 @@ def create_tree(doc, nlp):
     output_path.open("w", encoding="utf-8").write(svg)
     return output_path
 """
-
 
 def remove_old_images():
     files = glob.glob('static/*')
@@ -163,7 +163,6 @@ remove_old_images()
 @app.route('/search')
 def search():
     remove_old_images()
-    # remember to delete old images from static!
 
     # for creating dependency trees
     nlp_en = spacy.load("en_core_web_sm")
@@ -225,7 +224,6 @@ def search():
                         print("problem with image")
                         proverb_results.append({'name': proverb, 'meaning': meaning})
                 else:
-                    #output_path = Path("static/000_no_image.svg")
                     proverb_results.append({'name': proverb, 'meaning':meaning})
 
                 #proverb_results.append({'name': proverb, 'meaning':meaning, 'pltpath': output_path})
@@ -233,6 +231,7 @@ def search():
 
         except IndexError:
             print("Something went wrong")
+
 
     # if user enters a query into the second search field:
     elif meaning_query:
