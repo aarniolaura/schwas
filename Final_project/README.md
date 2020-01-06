@@ -31,3 +31,7 @@ Instructions for getting the proverb search engine running on a web browser:
 6. Open a web browser and go to the address given in your command line + "/search".
 
 7. Find exciting proverbs! :)
+
+NOTE:  
+1) There are still some problems with showing some of the images. Also, images are not yet shown for Finnish proverbs.  
+2) Some errors may occur with translations.  
