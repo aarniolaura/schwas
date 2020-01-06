@@ -13,10 +13,10 @@ Instructions for getting the proverb search engine running:
   (also install scipy if for some reason not already installed)  
   (also install spacy if you want to print dependency trees with create_tree function (commented out by default)  
 
-4. Type the following commands:
-  set FLASK_APP=proverb_search.py
-  set FLASK_ENV=development
-  set FLASK_RUN_PORT=8000
+4. Type the following commands:  
+  set FLASK_APP=proverb_search.py  
+  set FLASK_ENV=development  
+  set FLASK_RUN_PORT=8000  
 
 5. Type: flask run
 
